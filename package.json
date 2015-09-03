@@ -1,0 +1,28 @@
+{
+  "name": "testium-core",
+  "version": "0.0.0",
+  "description": "Juggling the bits and pieces to run integration tests",
+  "main": "lib/testium-core.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/testiumjs/testium-core.git"
+  },
+  "keywords": [
+    "test",
+    "integration",
+    "selenium",
+    "webdriver"
+  ],
+  "author": {
+    "name": "Jan Krems",
+    "email": "jan.krems@groupon.com"
+  },
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/testiumjs/testium-core/issues"
+  },
+  "homepage": "https://github.com/testiumjs/testium-core#readme"
+}
