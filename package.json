@@ -4,7 +4,9 @@
   "description": "Juggling the bits and pieces to run integration tests",
   "main": "lib/testium-core.js",
   "scripts": {
-    "test": "mocha"
+    "pretest": "npub prep",
+    "test": "tap test/**/*.js",
+    "posttest": "npub verify"
   },
   "repository": {
     "type": "git",
@@ -24,5 +26,22 @@
   "bugs": {
     "url": "https://github.com/testiumjs/testium-core/issues"
   },
-  "homepage": "https://github.com/testiumjs/testium-core#readme"
+  "homepage": "https://github.com/testiumjs/testium-core#readme",
+  "devDependencies": {
+    "npub": "^2.2.0",
+    "tap": "^1.4.0"
+  },
+  "dependencies": {
+    "rc": "^1.1.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "license": {
+      "exclude": [
+        "examples",
+        "lib",
+        "test"
+      ]
+    }
+  }
 }
