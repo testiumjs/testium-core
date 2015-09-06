@@ -6,7 +6,7 @@ var tap = require('tap');
 
 var Config = require('../../lib/config');
 var Phantom = require('../../lib/processes/phantom');
-var spawnServer = require('../../lib/server');
+var spawnServer = require('../../lib/spawn-server');
 
 tap.test('Phantom.getOptions', function(t) {
   var config = new Config();

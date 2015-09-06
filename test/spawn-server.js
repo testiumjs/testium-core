@@ -5,7 +5,7 @@ var path = require('path');
 var test = require('tap').test;
 
 var Config = require('../lib/config');
-var spawnServer = require('../lib/server');
+var spawnServer = require('../lib/spawn-server');
 
 test('spawn a simple node http server', function(t) {
   spawnServer(new Config({

@@ -5,8 +5,8 @@ var path = require('path');
 
 var test = require('tap').test;
 
-var Config = require('../lib/config');
-var initLogs = require('../lib/logs');
+var Config = require('../../lib/config');
+var initLogs = require('../../lib/spawn-server/logs');
 
 test('open a log file', function(t) {
   var logs = initLogs(new Config({
