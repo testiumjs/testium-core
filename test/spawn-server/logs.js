@@ -10,13 +10,13 @@ var initLogs = require('../../lib/spawn-server/logs');
 
 test('open a log file', function(t) {
   var logs = initLogs(new Config({
-    root: __dirname,
-    logDirectory: 'tmp/logs/nested/dir'
+    root: path.join(__dirname, '../tmp'),
+    logDirectory: 'logs/nested/dir'
   }));
   logs.openLogFile('foo', 'w+')
     .then(function(log) {
       t.equal(log.filename,
-        path.join(__dirname, 'tmp/logs/nested/dir/foo.log'),
+        path.join(__dirname, '../tmp/logs/nested/dir/foo.log'),
         'generates log filename based on "foo"');
 
       fs.writeSync(log.fd, 'my content');
