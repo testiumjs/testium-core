@@ -15,7 +15,7 @@ test('spawn a simple node http server', function(t) {
     getOptions: function() {
       return {
         command: process.execPath,
-        args: [ 'examples/hello-world/server.js', 'Robin' ],
+        commandArgs: [ 'examples/hello-world/server.js', 'Robin' ],
         port: 3000
       };
     }
@@ -34,7 +34,7 @@ test('a child that fails to start', function(t) {
     getOptions: function() {
       return {
         command: process.execPath,
-        args: [ 'examples/throws/server.js', 'Robin' ],
+        commandArgs: [ 'examples/throws/server.js', 'Robin' ],
         port: 3040
       };
     }
@@ -57,7 +57,7 @@ test('a child that takes too long to listen', function(t) {
       return {
         command: process.execPath,
         args: [ 'examples/hello-world/server.js', 'Robin' ],
-        timeout: 250,
+        verifyTimeout: 250,
         port: 3001 // wrong port on purpose
       };
     }

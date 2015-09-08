@@ -37,7 +37,8 @@
     "find-open-port": "^1.0.0",
     "lodash": "^3.10.1",
     "mkdirp-then": "^1.1.0",
-    "rc": "^1.1.1"
+    "rc": "^1.1.1",
+    "subprocess": "~0.2.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",

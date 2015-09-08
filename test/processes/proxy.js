@@ -13,7 +13,7 @@ tap.test('Proxy.getOptions', function(t) {
   Proxy.getOptions(config)
     .then(function(options) {
       t.ok(options.port, 'Finds an open port for the proxy');
-      t.equal(options.args[1], '3041',
+      t.equal(options.commandArgs[1], '3041',
         'Passes in the app port as the 2nd param to the child');
       t.end();
     }, function(error) {
