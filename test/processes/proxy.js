@@ -5,8 +5,11 @@ var path = require('path');
 var tap = require('tap');
 
 var Config = require('../../lib/config');
+var App = require('../../lib/processes/application');
 var Proxy = require('../../lib/processes/proxy');
 var spawnServer = require('../../lib/spawn-server');
+
+var HELLO_WORLD = path.resolve(__dirname, '../../examples/hello-world');
 
 tap.test('Proxy.getOptions', function(t) {
   var config = new Config({ app: { port: 3041 } });
@@ -24,13 +27,17 @@ tap.test('Proxy.getOptions', function(t) {
 
 tap.test('Launching the proxy', function(t) {
   var config = new Config({
-    root: path.resolve(__dirname, '../tmp/proxy'),
+    root: HELLO_WORLD,
     app: { port: 3041 }
   });
-  spawnServer(config, Proxy)
+  spawnServer(config, [ Proxy, App ])
     .then(function(results) {
       var proxy = results['proxy'].rawProcess;
       proxy.kill();
+
+      var app = results['application'].rawProcess;
+      app.kill();
+
       t.end();
     })
     .then(null, function(error) {
