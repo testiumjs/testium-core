@@ -28,11 +28,11 @@ tap.test('Launching phantom', function(t) {
     root: path.resolve(__dirname, '../tmp/phantom')
   });
   spawnServer(config, Phantom)
-    .then(function(phantom) {
+    .then(function(results) {
+      var phantom = results['phantomjs'].rawProcess;
       phantom.kill();
       t.end();
-    })
-    .then(null, function(error) {
+    }, function(error) {
       t.error(error);
       t.end();
     });

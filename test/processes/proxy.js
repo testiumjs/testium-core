@@ -28,7 +28,8 @@ tap.test('Launching the proxy', function(t) {
     app: { port: 3041 }
   });
   spawnServer(config, Proxy)
-    .then(function(proxy) {
+    .then(function(results) {
+      var proxy = results['proxy'].rawProcess;
       proxy.kill();
       t.end();
     })

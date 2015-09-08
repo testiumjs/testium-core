@@ -38,7 +38,7 @@
     "lodash": "^3.10.1",
     "mkdirp-then": "^1.1.0",
     "rc": "^1.1.1",
-    "subprocess": "~0.2.0"
+    "subprocess": "jkrems/subprocess#jk-kill-on-timeout"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",

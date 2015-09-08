@@ -19,7 +19,8 @@ test('spawn a simple node http server', function(t) {
         port: 3000
       };
     }
-  }).then(function(child) {
+  }).then(function(results) {
+    var child = results['hello-world'].rawProcess;
     t.type(child.pid, 'number', 'has a numeric pid');
     child.kill();
     t.end();
@@ -38,12 +39,12 @@ test('a child that fails to start', function(t) {
         port: 3040
       };
     }
-  }).then(function(child) {
+  }).then(function(results) {
+    var child = results['throws'].rawProcess;
     t.fail('Should have failed b/c the child exits');
     child.kill();
     t.end();
   }, function(error) {
-    console.log(error);
     t.end();
   });
 });
@@ -56,17 +57,17 @@ test('a child that takes too long to listen', function(t) {
     getOptions: function() {
       return {
         command: process.execPath,
-        args: [ 'examples/hello-world/server.js', 'Robin' ],
+        commandArgs: [ 'examples/hello-world/server.js', 'Robin' ],
         verifyTimeout: 250,
         port: 3001 // wrong port on purpose
       };
     }
-  }).then(function(child) {
+  }).then(function(results) {
+    var child = results['hello-world'].rawProcess;
     t.fail('Should have failed b/c the child listens on the wrong port');
     child.kill();
     t.end();
   }, function(error) {
-    console.log(error);
     t.end();
   });
 });
