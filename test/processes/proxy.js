@@ -18,6 +18,7 @@ tap.test('Proxy.getOptions', function(t) {
       t.ok(options.port, 'Finds an open port for the proxy');
       t.equal(options.commandArgs[1], '3041',
         'Passes in the app port as the 2nd param to the child');
+      t.equal(config.get('proxy.targetUrl'), 'http://127.0.0.1:' + options.port);
       t.end();
     }, function(error) {
       t.error(error);
