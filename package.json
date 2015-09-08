@@ -4,7 +4,7 @@
   "description": "Juggling the bits and pieces to run integration tests",
   "main": "lib/testium-core.js",
   "scripts": {
-    "test": "tap 'test/**/*.js'",
+    "test": "tap 'test/**/*.js' && jshint lib",
     "posttest": "npub verify"
   },
   "repository": {
@@ -28,6 +28,7 @@
   "homepage": "https://github.com/testiumjs/testium-core#readme",
   "devDependencies": {
     "cookie": "~0.1.3",
+    "jshint": "~2.8.0",
     "npub": "^2.2.0",
     "tap": "^1.4.0"
   },
@@ -40,7 +41,7 @@
     "mkdirp-then": "^1.1.0",
     "rc": "^1.1.1",
     "read-package-json": "~2.0.0",
-    "subprocess": "jkrems/subprocess#jk-kill-on-timeout"
+    "subprocess": "~0.3.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
