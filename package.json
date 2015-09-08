@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/testiumjs/testium-core#readme",
   "devDependencies": {
+    "cookie": "~0.1.3",
     "npub": "^2.2.0",
     "tap": "^1.4.0"
   },
