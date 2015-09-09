@@ -1,0 +1,6 @@
+{
+  "name": "testium-core.hello-world",
+  "scripts": {
+    "start": "node server.js Quinn"
+  }
+}
