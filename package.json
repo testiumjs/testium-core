@@ -43,7 +43,8 @@
     "qs": "~4.0.0",
     "rc": "^1.1.1",
     "read-package-json": "~2.0.0",
-    "subprocess": "~0.3.0"
+    "subprocess": "~0.3.0",
+    "testium-cookie": "^1.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
