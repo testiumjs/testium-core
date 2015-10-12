@@ -30,9 +30,14 @@ tap.test('Init against hello-world', function(t) {
     })
     .then(function(result) {
       t.equal(result, 'Hello Quinn', 'New page url redirects to target');
-      return fetchResponse(testium.getNewPageUrl('/echo', { 'x': 'y' }));
+      return fetchResponse(
+        testium.getNewPageUrl('/echo', { query: { 'x': 'y' } }), { json: true });
     })
     .then(function(response) {
+      var echo = response.body;
+      t.equal(echo.method, 'GET');
+      t.equal(echo.url, '/echo?x=y');
+
       t.ok(response.headers['set-cookie'], 'Sets a cookie');
       t.ok(('' + response.headers['set-cookie']).indexOf('_testium_=') !== -1,
         'Sets a _testium_ cookie');
