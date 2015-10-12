@@ -22,6 +22,10 @@ tap.test('Init against hello-world', function(t) {
   initTestium()
     .then(function(_testium) { testium = _testium; })
     .then(function() {
+      t.equal(testium.getNewPageUrl('https://www.example.com', {
+        query: { a: 'b' }
+      }), 'https://www.example.com/?a=b');
+
       return fetch(testium.getInitialUrl());
     })
     .then(function(result) {
