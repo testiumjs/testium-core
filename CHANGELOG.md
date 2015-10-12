@@ -1,3 +1,8 @@
+1.1.2
+-----
+* Fix new page url with options - @jkrems
+  https://github.com/testiumjs/testium-core/pull/6
+
 1.1.1
 -----
 * Fix missing _testium_ cookies - @jkrems
