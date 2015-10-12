@@ -12,6 +12,9 @@ var gofer = new Gofer({
 function fetch(uri, options) {
   return Bluebird.resolve(gofer.fetch(uri, options));
 }
+function fetchResponse(uri, options) {
+  return Bluebird.resolve(gofer.fetch(uri, options).getResponse());
+}
 
 tap.test('Init against hello-world', function(t) {
   process.chdir(__dirname + '/../examples/hello-world');
@@ -27,6 +30,12 @@ tap.test('Init against hello-world', function(t) {
     })
     .then(function(result) {
       t.equal(result, 'Hello Quinn', 'New page url redirects to target');
+      return fetchResponse(testium.getNewPageUrl('/echo', { 'x': 'y' }));
+    })
+    .then(function(response) {
+      t.ok(response.headers['set-cookie'], 'Sets a cookie');
+      t.ok(('' + response.headers['set-cookie']).indexOf('_testium_=') !== -1,
+        'Sets a _testium_ cookie');
     })
     .then(function() {
       t.end();
