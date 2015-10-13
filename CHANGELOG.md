@@ -1,3 +1,8 @@
+1.1.3
+-----
+* Fix handling of external urls
+  https://github.com/testiumjs/testium-core/pull/7
+
 1.1.2
 -----
 * Fix new page url with options - @jkrems
