@@ -10,7 +10,11 @@ var launchAllProcesses = require('../lib/processes');
 var HELLO_WORLD = path.resolve(__dirname, '../examples/hello-world');
 
 tap.test('Launch all processes', function(t) {
-  var config = new Config({ root: HELLO_WORLD, launch: true });
+  var config = new Config({
+    root: HELLO_WORLD,
+    launch: true,
+    browser: 'phantomjs'
+  });
   launchAllProcesses(config)
     .then(function(procs) {
       var procNames = Object.keys(procs).sort();
