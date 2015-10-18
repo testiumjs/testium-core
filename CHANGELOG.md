@@ -1,3 +1,10 @@
+1.2.0
+-----
+* Support the testium_app=null variant
+* Fix hanging build on node 0.10
+* Add support for launching selenium
+  https://github.com/testiumjs/testium-core/pull/8
+
 1.1.3
 -----
 * Fix handling of external urls
