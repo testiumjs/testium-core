@@ -4,6 +4,7 @@ var http = require('http');
 var name = process.argv[2] || 'World';
 
 http.createServer(function(req, res) {
+  console.log('%s %s', req.method, req.url);
   if (req.url.indexOf('/echo') === 0) {
     res.setHeader('Content-Type', 'application/json');
     return res.end(JSON.stringify({

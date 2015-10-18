@@ -47,6 +47,9 @@ tap.test('Init against hello-world', function(t) {
         'Sets a _testium_ cookie');
     })
     .then(function() {
+      if (testium) {
+        testium.close();
+      }
       t.end();
     })
     .then(null, function(error) {
