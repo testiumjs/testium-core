@@ -1,13 +1,11 @@
-'use strict';
+import assert from 'assertive';
+import Gofer from 'gofer';
+import Bluebird from 'bluebird';
 
-var tap = require('tap');
-var Gofer = require('gofer');
-var Bluebird = require('bluebird');
+import TestiumCore from '../';
 
-var initTestium = require('../');
-
-var gofer = new Gofer({
-  globalDefaults: {}
+const gofer = new Gofer({
+  globalDefaults: {},
 });
 function fetch(uri, options) {
   return Bluebird.resolve(gofer.fetch(uri, options));
@@ -16,47 +14,54 @@ function fetchResponse(uri, options) {
   return Bluebird.resolve(gofer.fetch(uri, options).getResponse());
 }
 
-tap.test('Init against hello-world', function(t) {
-  process.chdir(__dirname + '/../examples/hello-world');
-  var testium;
-  initTestium()
-    .then(function(_testium) { testium = _testium; })
-    .then(function() {
-      t.equal(testium.getNewPageUrl('https://www.example.com', {
-        query: { a: 'b' }
-      }), 'https://www.example.com/?a=b');
+describe('testium-core', () => {
+  let testium;
+  before(async () => {
+    testium = await TestiumCore.getTestium();
+  });
 
-      return fetch(testium.getInitialUrl());
-    })
-    .then(function(result) {
-      t.equal(result, '', 'Initial url returns a blank page');
-      return fetch(testium.getNewPageUrl('/foo'));
-    })
-    .then(function(result) {
-      t.equal(result, 'Hello Quinn', 'New page url redirects to target');
-      return fetchResponse(
-        testium.getNewPageUrl('/echo', { query: { 'x': 'y' } }), { json: true });
-    })
-    .then(function(response) {
-      var echo = response.body;
-      t.equal(echo.method, 'GET');
-      t.equal(echo.url, '/echo?x=y');
+  after(() => testium && testium.close());
 
-      t.ok(response.headers['set-cookie'], 'Sets a cookie');
-      t.ok(('' + response.headers['set-cookie']).indexOf('_testium_=') !== -1,
-        'Sets a _testium_ cookie');
-    })
-    .then(function() {
-      if (testium) {
-        testium.close();
-      }
-      t.end();
-    })
-    .then(null, function(error) {
-      if (testium) {
-        testium.close();
-      }
-      t.error(error);
-      t.end();
+  describe('getNewPageUrl', () => {
+    it('ignores absolute urls', () => {
+      assert.equal('https://www.example.com/?a=b',
+        testium.getNewPageUrl('https://www.example.com', {
+          query: { a: 'b' },
+        }));
     });
+
+    it('redirects to the target url', async () => {
+      const result = await fetch(testium.getNewPageUrl('/error'));
+      assert.equal('500 SERVER ERROR', result);
+    });
+
+    it('supports additional options', async () => {
+      const response = await fetchResponse(
+        testium.getNewPageUrl('/echo', { query: { 'x': 'y' } }), { json: true });
+
+      const echo = response.body;
+      assert.truthy('Sends a valid JSON response', echo);
+      assert.equal('GET', echo.method);
+      assert.equal('/echo?x=y', echo.url);
+
+      assert.truthy('Sets a cookie', response.headers['set-cookie']);
+      assert.include('Sets a _testium_ cookie',
+        '_testium_=', '' + response.headers['set-cookie']);
+    });
+  });
+
+  describe('getInitialUrl', () => {
+    it('is a blank page', async () => {
+      const result = await fetch(testium.getInitialUrl());
+      assert.equal('Initial url returns a blank page', '', result);
+    });
+  });
+
+  describe('basic navigation', () => {
+    it('can navigate to /index.html', async () => {
+      const browser = await TestiumCore.getBrowser();
+      browser.navigateTo('/index.html');
+      assert.equal('Test Title', browser.getPageTitle());
+    });
+  });
 });

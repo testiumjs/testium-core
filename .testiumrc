@@ -1,0 +1,6 @@
+{
+  "launch": true,
+  "app": {
+    "command": "testium-example-app"
+  }
+}

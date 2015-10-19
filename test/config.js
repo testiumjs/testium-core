@@ -1,53 +1,93 @@
-'use strict';
+import path from 'path';
 
-var path = require('path');
+import assert from 'assertive';
 
-var tap = require('tap');
+import Config from '../lib/config';
 
-var Config = require('../lib/config');
+function enterDirectory(relative) {
+  const old = process.cwd();
 
-function enterDirectory(t, relative) {
-  var old = process.cwd();
-  process.chdir(path.resolve(__dirname, relative));
+  before(() =>
+    process.chdir(path.resolve(__dirname, relative)));
 
-  t.tearDown(function() {
-    process.chdir(old);
-  });
+  after(() => process.chdir(old));
 }
 
-tap.test('Config::set', function(t) {
-  var config = new Config({ original: 42 });
-  config.set('original', 13);
-  t.equal(config.original, 13, 'changes existing values');
-  config.set('a.b.c', 'foo');
-  t.equal(config.a.b.c, 'foo', 'can introduce new nested key');
-  t.end();
-});
+describe('Config', () => {
+  describe('Config::set', () => {
+    let config;
+    beforeEach(() => config = new Config({ original: 42 }));
 
-tap.test('Config.load just with defaults', function(t) {
-  enterDirectory(t, '../');
+    it('changes existing values', () => {
+      config.set('original', 13);
+      assert.equal(13, config.original);
+    });
 
-  t.equal(Config.load().launch, false,
-    'launch is set to the default of false');
-  t.end();
-});
+    it('can introduce new nested keys', () => {
+      config.set('a.b.c', 'foo');
+      assert.equal('foo', config.a.b.c);
+    });
+  });
 
-tap.test('Config.load with an rc file', function(t) {
-  enterDirectory(t, '../examples/rcfile');
+  describe('Config::createShallowChild', () => {
+    let parent;
+    let child;
 
-  var config = Config.load();
+    beforeEach(() => {
+      parent = new Config({ original: 42 });
+      child = parent.createShallowChild({ foo: 'bar' });
+    });
 
-  t.equal(config.launch, true,
-    'launch is correctly read from the rc file');
-  t.equal(config.get('launch'), true,
-    'can retrieve the setting using get(propertyPath)');
+    it('keeps settings isolated to child', () => {
+      assert.equal('adds settings to child', 'bar', child.foo);
+      assert.equal('settings don\'t appear in parent', undefined, parent.foo);
+      child.set('original', 13);
+      assert.equal('changes value in child', child.original, 13);
+      assert.equal('keeps existing value in parent', parent.original, 42);
+    });
 
-  t.equal(config.get('not.a.thing', 'or this'), 'or this',
-    'Allows specifying a default value');
-  t.throws(function() { config.get('not.a.thing'); },
-    { message: 'Missing required config setting "not.a.thing"' },
-    'Throws when trying to retrieve a non-existing setting');
-  t.equal(config.get('not.a.thing', null), null,
-    'Allows specifying `null` as a default for optional settings');
-  t.end();
+    it('makes changes to parent visible in child', () => {
+      assert.equal('is undefined initially', undefined, child.zapp);
+      parent.set('zapp', true);
+      assert.equal('becomes true after parent changed', true, child.zapp);
+    });
+  });
+
+  describe('Config.load', () => {
+    describe('just with defaults', () => {
+      // throws has an empty .testiumrc file
+      enterDirectory('../examples/throws');
+
+      it('defaults `launch` to false', () => {
+        assert.equal('launch is set to the default of false',
+          false, Config.load().launch);
+      });
+    });
+
+    describe('with an rc file', () => {
+      enterDirectory('../examples/rcfile');
+
+      let config;
+      beforeEach(() => config = Config.load());
+
+      it('reads `launch` from the rc file', () => {
+        assert.equal('launch is correctly read from the rc file',
+          true, config.launch);
+        assert.equal('can retrieve the setting using get(propertyPath)',
+          true, config.get('launch'));
+      });
+
+      it('handles non-existing settings', () => {
+        assert.equal('Allows specifying a default value',
+          'or this', config.get('not.a.thing', 'or this'));
+
+        const err = assert.throws('Throws when trying to retrieve a non-existing setting',
+          () => config.get('not.a.thing'));
+        assert.equal('Missing required config setting "not.a.thing"', err.message);
+
+        assert.equal('Allows specifying `null` as a default for optional settings',
+          null, config.get('not.a.thing', null));
+      });
+    });
+  });
 });

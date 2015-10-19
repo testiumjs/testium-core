@@ -1,48 +1,31 @@
-'use strict';
+import path from 'path';
 
-var path = require('path');
+import assert from 'assertive';
 
-var tap = require('tap');
+import Config from '../../lib/config';
+import App from '../../lib/processes/application';
+import Proxy from '../../lib/processes/proxy';
+import spawnServer from '../../lib/spawn-server';
 
-var Config = require('../../lib/config');
-var App = require('../../lib/processes/application');
-var Proxy = require('../../lib/processes/proxy');
-var spawnServer = require('../../lib/spawn-server');
+const HELLO_WORLD = path.resolve(__dirname, '../../examples/hello-world');
 
-var HELLO_WORLD = path.resolve(__dirname, '../../examples/hello-world');
-
-tap.test('Proxy.getOptions', function(t) {
-  var config = new Config({ app: { port: 3041 } });
-  Proxy.getOptions(config)
-    .then(function(options) {
-      t.ok(options.port, 'Finds an open port for the proxy');
-      t.equal(options.commandArgs[1], '3041',
-        'Passes in the app port as the 2nd param to the child');
-      t.equal(config.get('proxy.targetUrl'), 'http://127.0.0.1:' + options.port);
-      t.end();
-    }, function(error) {
-      t.error(error);
-      t.end();
-    });
-});
-
-tap.test('Launching the proxy', function(t) {
-  var config = new Config({
-    root: HELLO_WORLD,
-    app: { port: 3041 }
+describe('Proxy', () => {
+  it('can generate spawn options', async () => {
+    const config = new Config({ app: { port: 3041 } });
+    const options = await Proxy.getOptions(config);
+    assert.hasType('Finds an open port', Number, options.port);
+    assert.equal('Passes in the app port as the 2nd param to the child',
+      '3041', options.commandArgs[1]);
+    assert.equal('http://127.0.0.1:' + options.port, config.get('proxy.targetUrl'));
   });
-  spawnServer(config, [ Proxy, App ])
-    .then(function(results) {
-      var proxy = results['proxy'].rawProcess;
-      proxy.kill();
 
-      var app = results['application'].rawProcess;
-      app.kill();
-
-      t.end();
-    })
-    .then(null, function(error) {
-      t.error(error);
-      t.end();
+  it('can actually spawn', async () => {
+    const config = new Config({
+      root: HELLO_WORLD,
+      app: { port: 3041 },
     });
+    const { proxy, application } = await spawnServer(config, [ Proxy, App ]);
+    proxy.rawProcess.kill();
+    application.rawProcess.kill();
+  });
 });
