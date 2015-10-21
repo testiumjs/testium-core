@@ -1,3 +1,8 @@
+1.3.0
+-----
+* Add singleton logic from testium - @jkrems
+  https://github.com/testiumjs/testium-core/pull/10
+
 1.2.0
 -----
 * Support the testium_app=null variant
