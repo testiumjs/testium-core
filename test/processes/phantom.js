@@ -1,39 +1,26 @@
-'use strict';
+import path from 'path';
 
-var path = require('path');
+import assert from 'assertive';
 
-var tap = require('tap');
+import Config from '../../lib/config';
+import Phantom from '../../lib/processes/phantom';
+import spawnServer from '../../lib/spawn-server';
 
-var Config = require('../../lib/config');
-var Phantom = require('../../lib/processes/phantom');
-var spawnServer = require('../../lib/spawn-server');
-
-tap.test('Phantom.getOptions', function(t) {
-  var config = new Config();
-  Phantom.getOptions(config)
-    .then(function(options) {
-      t.ok(options.port, 'Finds an open port for phantom');
-      t.equal(config.get('selenium.serverUrl'),
-        'http://127.0.0.1:' + options.port + '/wd/hub',
-        'Sets the selenium server url');
-      t.end();
-    }, function(error) {
-      t.error(error);
-      t.end();
-    });
-});
-
-tap.test('Launching phantom', function(t) {
-  var config = new Config({
-    root: path.resolve(__dirname, '../tmp/phantom')
+describe('Phantom', () => {
+  it('can generate spawn options', async () => {
+    const config = new Config();
+    const options = await Phantom.getOptions(config);
+    assert.hasType('Finds an open port', Number, options.port);
+    assert.equal('Sets the selenium server url',
+      'http://127.0.0.1:' + options.port + '/wd/hub',
+      config.get('selenium.serverUrl'));
   });
-  spawnServer(config, Phantom)
-    .then(function(results) {
-      var phantom = results['phantomjs'].rawProcess;
-      phantom.kill();
-      t.end();
-    }, function(error) {
-      t.error(error);
-      t.end();
+
+  it('can actually spawn', async () => {
+    const config = new Config({
+      root: path.resolve(__dirname, '../tmp/phantom'),
     });
+    const { phantomjs } = await spawnServer(config, Phantom);
+    phantomjs.rawProcess.kill();
+  });
 });

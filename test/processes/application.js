@@ -1,40 +1,26 @@
-'use strict';
+import path from 'path';
 
-var path = require('path');
+import assert from 'assertive';
 
-var tap = require('tap');
+import Config from '../../lib/config';
+import App from '../../lib/processes/application';
+import spawnServer from '../../lib/spawn-server';
 
-var Config = require('../../lib/config');
-var App = require('../../lib/processes/application');
-var spawnServer = require('../../lib/spawn-server');
+const HELLO_WORLD = path.resolve(__dirname, '../../examples/hello-world');
 
-var HELLO_WORLD = path.resolve(__dirname, '../../examples/hello-world');
+describe('App', () => {
+  it('can generate spawn options', async () => {
+    const config = new Config({ root: HELLO_WORLD });
+    const options = await App.getOptions(config);
+    assert.hasType('Finds an open port', Number, options.port);
+    assert.equal('Parses command from scripts.start', 'node', options.command);
+    assert.deepEqual('Parses commandArgs from scripts.start',
+      [ 'server.js', 'Quinn' ], options.commandArgs);
+  });
 
-tap.test('App.getOptions', function(t) {
-  var config = new Config({ root: HELLO_WORLD });
-  App.getOptions(config)
-    .then(function(options) {
-      t.ok(options.port, 'Finds an open port for the app');
-      t.equal(options.command, 'node',
-        'Parses command from scripts.start');
-      t.deepEqual(options.commandArgs, [ 'server.js', 'Quinn' ],
-        'Parses commandArgs from scripts.start');
-      t.end();
-    }, function(error) {
-      t.error(error);
-      t.end();
-    });
-});
-
-tap.test('Launching an application', function(t) {
-  var config = new Config({ root: HELLO_WORLD });
-  spawnServer(config, App)
-    .then(function(results) {
-      var app = results['application'].rawProcess;
-      app.kill();
-      t.end();
-    }, function(error) {
-      t.error(error);
-      t.end();
-    });
+  it('can actually spawn', async () => {
+    const config = new Config({ root: HELLO_WORLD });
+    const { application } = await spawnServer(config, App);
+    application.rawProcess.kill();
+  });
 });

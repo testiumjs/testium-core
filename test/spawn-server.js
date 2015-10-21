@@ -1,73 +1,72 @@
-'use strict';
+import assert from 'assertive';
 
-var path = require('path');
+import Config from '../lib/config';
+import spawnServer from '../lib/spawn-server';
 
-var test = require('tap').test;
-
-var Config = require('../lib/config');
-var spawnServer = require('../lib/spawn-server');
-
-test('spawn a simple node http server', function(t) {
-  spawnServer(new Config({
-    root: __dirname + '/tmp/server'
-  }), {
-    name: 'hello-world',
-    getOptions: function() {
-      return {
-        command: process.execPath,
-        commandArgs: [ 'examples/hello-world/server.js', 'Robin' ],
-        port: 3000
-      };
+describe('spawnServer', () => {
+  it('spawns a simple node http server', async () => {
+    const { helloWorld } = await spawnServer(new Config({
+      root: __dirname + '/tmp/server',
+    }), {
+      name: 'helloWorld',
+      getOptions() {
+        return {
+          command: process.execPath,
+          commandArgs: [ 'examples/hello-world/server.js', 'Robin' ],
+          port: 3000,
+        };
+      },
+    });
+    const child = helloWorld.rawProcess;
+    try {
+      assert.hasType(Number, child.pid);
+    } finally {
+      child.kill();
     }
-  }).then(function(results) {
-    var child = results['hello-world'].rawProcess;
-    t.type(child.pid, 'number', 'has a numeric pid');
-    child.kill();
-    t.end();
   });
-});
 
-test('a child that fails to start', function(t) {
-  spawnServer(new Config({
-    root: __dirname + '/tmp/server'
-  }), {
-    name: 'throws',
-    getOptions: function() {
-      return {
-        command: process.execPath,
-        commandArgs: [ 'examples/throws/server.js', 'Robin' ],
-        port: 3040
-      };
+  it('handles a child that fails to start', async () => {
+    try {
+      await spawnServer(new Config({
+        root: __dirname + '/tmp/server',
+      }), {
+        name: 'throws',
+        getOptions() {
+          return {
+            command: process.execPath,
+            commandArgs: [ 'examples/throws/server.js', 'Robin' ],
+            port: 3040,
+          };
+        },
+      });
+    } catch (err) {
+      assert.include('Broken by design', err.stack);
+      return;
     }
-  }).then(function(results) {
-    var child = results['throws'].rawProcess;
-    t.fail('Should have failed b/c the child exits');
-    child.kill();
-    t.end();
-  }, function(error) {
-    t.end();
+
+    throw new Error('Should have failed b/c the child exits');
   });
-});
 
-test('a child that takes too long to listen', function(t) {
-  spawnServer(new Config({
-    root: __dirname + '/tmp/server'
-  }), {
-    name: 'hello-world',
-    getOptions: function() {
-      return {
-        command: process.execPath,
-        commandArgs: [ 'examples/hello-world/server.js', 'Robin' ],
-        verifyTimeout: 250,
-        port: 3001 // wrong port on purpose
-      };
+  it('fails for a child that takes too long to listen', async () => {
+    try {
+      await spawnServer(new Config({
+        root: __dirname + '/tmp/server',
+      }), {
+        name: 'hello-world',
+        getOptions() {
+          return {
+            command: process.execPath,
+            commandArgs: [ 'examples/hello-world/server.js', 'Robin' ],
+            verifyTimeout: 250,
+            port: 3001, // wrong port on purpose
+          };
+        },
+      });
+    } catch (err) {
+      assert.include('Process "hello-world" did not start in time.', err.stack);
+      return;
     }
-  }).then(function(results) {
-    var child = results['hello-world'].rawProcess;
-    t.fail('Should have failed b/c the child listens on the wrong port');
-    child.kill();
-    t.end();
-  }, function(error) {
-    t.end();
+
+    throw new Error('Should have failed b/c the child listens on the wrong port');
   });
 });

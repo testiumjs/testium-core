@@ -1,29 +1,25 @@
-'use strict';
+import path from 'path';
 
-var path = require('path');
+import assert from 'assertive';
+import { each } from 'lodash';
 
-var tap = require('tap');
+import Config from '../lib/config';
+import launchAllProcesses from '../lib/processes';
 
-var Config = require('../lib/config');
-var launchAllProcesses = require('../lib/processes');
+const HELLO_WORLD = path.resolve(__dirname, '../examples/hello-world');
 
-var HELLO_WORLD = path.resolve(__dirname, '../examples/hello-world');
-
-tap.test('Launch all processes', function(t) {
-  var config = new Config({
+describe('Launch all processes', () => {
+  const config = new Config({
     root: HELLO_WORLD,
     launch: true,
-    browser: 'phantomjs'
+    browser: 'phantomjs',
   });
-  launchAllProcesses(config)
-    .then(function(procs) {
-      var procNames = Object.keys(procs).sort();
-      t.deepEqual(procNames, [
-        'application', 'phantomjs', 'proxy'
-      ], 'Spawns app, phantom, and proxy');
-      t.end();
-    }, function(error) {
-      t.error(error);
-      t.end();
-    });
+
+  it('launches all the processes', async () => {
+    const procs = await launchAllProcesses(config);
+    const procNames = Object.keys(procs).sort();
+    assert.deepEqual('Spawns app, phantom, and proxy',
+      [ 'application', 'phantomjs', 'proxy' ], procNames);
+    each(procs, ({rawProcess}) => rawProcess.kill());
+  });
 });

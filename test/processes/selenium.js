@@ -1,30 +1,23 @@
-'use strict';
+import path from 'path';
 
-var path = require('path');
+import assert from 'assertive';
 
-var tap = require('tap');
+import Config from '../../lib/config';
+import Selenium from '../../lib/processes/selenium';
+import spawnServer from '../../lib/spawn-server';
 
-var Config = require('../../lib/config');
-var Selenium = require('../../lib/processes/selenium');
-var spawnServer = require('../../lib/spawn-server');
-
-tap.test('Launching selenium for firefox', function(t) {
-  var config = new Config({
-    browser: 'firefox',
-    root: path.resolve(__dirname, '../tmp/selenium')
-  });
-  spawnServer(config, Selenium)
-    .then(function(results) {
-      var selenium = results['selenium'].rawProcess;
-      selenium.kill();
-
-      t.equal(config.get('selenium.serverUrl'),
-        'http://127.0.0.1:' + config.get('selenium.port') + '/wd/hub',
-        'Sets the selenium server url');
-
-      t.end();
-    }, function(error) {
-      t.error(error);
-      t.end();
+describe('Selenium', () => {
+  it('can actually spawn, for firefox', async () => {
+    const config = new Config({
+      browser: 'firefox',
+      root: path.resolve(__dirname, '../tmp/selenium'),
     });
+
+    const { selenium } = await spawnServer(config, Selenium);
+    selenium.rawProcess.kill();
+
+    assert.equal('Sets the selenium server url',
+      'http://127.0.0.1:' + config.get('selenium.port') + '/wd/hub',
+      config.get('selenium.serverUrl'));
+  });
 });
