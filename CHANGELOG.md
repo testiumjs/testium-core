@@ -1,3 +1,8 @@
+1.3.1
+-----
+* Default proxy port to 4445 - @jkrems
+  https://github.com/testiumjs/testium-core/pull/12
+
 1.3.0
 -----
 * Add singleton logic from testium - @jkrems
