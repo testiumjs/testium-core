@@ -1,3 +1,8 @@
+1.4.0
+-----
+* Prefer browser.quit for wd's sake
+  https://github.com/testiumjs/testium-core/pull/11
+
 1.3.1
 -----
 * Default proxy port to 4445 - @jkrems
