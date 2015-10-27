@@ -2,7 +2,7 @@ import assert from 'assertive';
 import Gofer from 'gofer';
 import Bluebird from 'bluebird';
 
-import TestiumCore from '../';
+import {getTestium, getBrowser} from '../';
 
 const gofer = new Gofer({
   globalDefaults: {},
@@ -17,7 +17,7 @@ function fetchResponse(uri, options) {
 describe('testium-core', () => {
   let testium;
   before(async () => {
-    testium = await TestiumCore.getTestium();
+    testium = await getTestium();
   });
 
   after(() => testium && testium.close());
@@ -59,9 +59,36 @@ describe('testium-core', () => {
 
   describe('basic navigation', () => {
     it('can navigate to /index.html', async () => {
-      const browser = await TestiumCore.getBrowser();
+      const browser = await getBrowser();
       browser.navigateTo('/index.html');
       assert.equal('Test Title', browser.getPageTitle());
+    });
+  });
+
+  describe('cross-test side effects', () => {
+    describe('changes page size', () => {
+      before(async () => {
+        testium = await getTestium();
+      });
+
+      it('leaves a dirty state', () =>
+        testium.browser.setPageSize({ width: 600, height: 800 }));
+
+      it('can read its own changes', async () => {
+        const pageSize = await testium.browser.getPageSize();
+        assert.deepEqual({ width: 600, height: 800 }, pageSize);
+      });
+    });
+
+    describe('expects original page size', () => {
+      before(async () => {
+        testium = await getTestium();
+      });
+
+      it('sees the default page size', async () => {
+        const pageSize = await testium.browser.getPageSize();
+        assert.deepEqual({ height: 768, width: 1024 }, pageSize);
+      });
     });
   });
 });
