@@ -63,6 +63,14 @@ describe('testium-core', () => {
       browser.navigateTo('/index.html');
       assert.equal('Test Title', browser.getPageTitle());
     });
+
+    it('preserves #hash segments of the url', async () => {
+      const browser = await getBrowser();
+      browser.navigateTo('/#!/foo?yes=it-is');
+      assert.equal('Test Title', browser.getPageTitle());
+      const hash = browser.evaluate('return "" + window.location.hash;');
+      assert.equal('#!/foo?yes=it-is', hash);
+    });
   });
 
   describe('cross-test side effects', () => {
