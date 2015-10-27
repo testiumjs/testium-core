@@ -1,3 +1,8 @@
+1.4.3
+-----
+* Fix handling of urls hash segment - @jkrems
+  https://github.com/testiumjs/testium-core/pull/15
+
 1.4.2
 -----
 * Fix regression when using launch=false - @jkrems
