@@ -1,3 +1,8 @@
+1.4.4
+-----
+* Send headers to a page with hash segments - @jkrems
+  https://github.com/testiumjs/testium-core/pull/16
+
 1.4.3
 -----
 * Fix handling of urls hash segment - @jkrems
