@@ -66,10 +66,17 @@ describe('testium-core', () => {
 
     it('preserves #hash segments of the url', async () => {
       const browser = await getBrowser();
-      browser.navigateTo('/#!/foo?yes=it-is');
-      assert.equal('Test Title', browser.getPageTitle());
+      browser.navigateTo('/echo#!/foo?yes=it-is', {
+        headers: {
+          'x-random-data': 'present',
+        },
+      });
       const hash = browser.evaluate('return "" + window.location.hash;');
       assert.equal('#!/foo?yes=it-is', hash);
+
+      // Making sure that headers are correctly forwarded
+      const echo = JSON.parse(browser.getElement('pre').get('text'));
+      assert.equal('present', echo.headers['x-random-data']);
     });
   });
 
