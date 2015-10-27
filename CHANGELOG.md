@@ -1,3 +1,8 @@
+1.4.2
+-----
+* Fix regression when using launch=false - @jkrems
+  https://github.com/testiumjs/testium-core/pull/13
+
 1.4.1
 -----
 * Restore page size when getting testium - @jkrems
