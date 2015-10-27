@@ -1,3 +1,8 @@
+1.4.1
+-----
+* Restore page size when getting testium - @jkrems
+  https://github.com/testiumjs/testium-core/pull/14
+
 1.4.0
 -----
 * Prefer browser.quit for wd's sake

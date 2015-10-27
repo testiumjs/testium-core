@@ -1,6 +1,6 @@
 {
   "name": "testium-core",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Juggling the bits and pieces to run integration tests",
   "main": "lib/testium-core.js",
   "scripts": {
