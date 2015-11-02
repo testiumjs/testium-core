@@ -21,9 +21,43 @@
     "webdriver"
   ],
   "author": {
-    "name": "Jan Krems",
-    "email": "jan.krems@groupon.com"
+    "name": "Sean Massa",
+    "email": "endangeredmassa@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Andrew Bloom"
+    },
+    {
+      "name": "azu",
+      "email": "info@efcl.info"
+    },
+    {
+      "name": "Chris Khoo",
+      "email": "chris.khoo@gmail.com"
+    },
+    {
+      "name": "Jan Krems",
+      "email": "jan.krems@gmail.com"
+    },
+    {
+      "name": "Jess Telford"
+    },
+    {
+      "name": "Joseph Núñez"
+    },
+    {
+      "name": "Johan Sundström"
+    },
+    {
+      "name": "Justin Searls",
+      "email": "justin@testdouble.com"
+    },
+    {
+      "name": "Parag Gupta",
+      "email": "paraggupta1993@gmail.com"
+    }
+  ],
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/testiumjs/testium-core/issues"
