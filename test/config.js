@@ -29,6 +29,31 @@ describe('Config', () => {
     });
   });
 
+  describe('Config::getBool', () => {
+    let config;
+    beforeEach(() => config = new Config({
+      boolFalse: false,
+      boolTrue: true,
+      strFalse: 'false',
+      strTrue: 'true',
+      str0: '0',
+    }));
+
+    it('handles bools and strings correctly', () => {
+      assert.equal(false, config.getBool('boolFalse'));
+      assert.equal(true, config.getBool('boolTrue'));
+      assert.equal(false, config.getBool('strFalse'));
+      assert.equal(true, config.getBool('strTrue'));
+      assert.equal(false, config.getBool('str0'));
+    });
+
+    it('supports default values, always returns a bool', () => {
+      assert.equal(false, config.getBool('non-existing', null));
+      assert.equal(false, config.getBool('non-existing', false));
+      assert.equal(true, config.getBool('non-existing', true));
+    });
+  });
+
   describe('Config::createShallowChild', () => {
     let parent;
     let child;
