@@ -1,3 +1,10 @@
+1.4.5
+-----
+* fix: Use existing app when started with `testium_launch=false`
+  https://github.com/testiumjs/testium-core/pull/18
+* Port contributor info, add code of conduct - @jkrems
+  https://github.com/testiumjs/testium-core/pull/17
+
 1.4.4
 -----
 * Send headers to a page with hash segments - @jkrems
