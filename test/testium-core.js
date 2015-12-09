@@ -96,6 +96,12 @@ describe('testium-core', () => {
       const echo = JSON.parse(browser.getElement('pre').get('text'));
       assert.equal('present', echo.headers['x-random-data']);
     });
+
+    it('can navigate to absolute urls', async () => {
+      const browser = await getBrowser();
+      browser.navigateTo('http://testiumjs.com/index.html');
+      assert.equal(200, await browser.getStatusCode());
+    });
   });
 
   describe('cross-test side effects', () => {
