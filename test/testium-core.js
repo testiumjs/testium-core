@@ -2,6 +2,8 @@ import assert from 'assertive';
 import Gofer from 'gofer';
 import Bluebird from 'bluebird';
 
+import {parse as parseUrl} from 'url';
+
 import {getTestium, getBrowser} from '../';
 
 const gofer = new Gofer({
@@ -24,10 +26,26 @@ describe('testium-core', () => {
 
   describe('getNewPageUrl', () => {
     it('ignores absolute urls', () => {
-      assert.equal('https://www.example.com/?a=b',
-        testium.getNewPageUrl('https://www.example.com', {
-          query: { a: 'b' },
-        }));
+      const {query} = parseUrl(testium.getNewPageUrl('https://www.example.com', {
+        query: { a: 'b' },
+      }), true);
+      assert.equal('https://www.example.com/?a=b', query.url);
+    });
+
+    it('redirects to an absolute target url', async () => {
+      const result = await fetch(testium.getNewPageUrl('http://testiumjs.com/index.html'));
+      assert.include('<html', result);
+    });
+
+    it('sets cookies for absolute target urls', async () => {
+      const targetUrl = testium.getNewPageUrl('http://testiumjs.com/index.html');
+      const response = await fetchResponse(targetUrl, {
+        proxy: testium.config.get('proxy.targetUrl'),
+      });
+
+      assert.truthy('Sets a cookie', response.headers['set-cookie']);
+      assert.include('Sets a _testium_ cookie',
+        '_testium_=', '' + response.headers['set-cookie']);
     });
 
     it('redirects to the target url', async () => {
