@@ -19,7 +19,7 @@ describe('Launch all processes', () => {
     const procs = await launchAllProcesses(config);
     const procNames = Object.keys(procs).sort();
     assert.deepEqual('Spawns app, phantom, and proxy',
-      [ 'application', 'phantomjs', 'proxy' ], procNames);
-    each(procs, ({rawProcess}) => rawProcess.kill());
+      ['application', 'phantomjs', 'proxy'], procNames);
+    each(procs, ({ rawProcess }) => rawProcess.kill());
   });
 });

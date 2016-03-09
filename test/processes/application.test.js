@@ -15,7 +15,7 @@ describe('App', () => {
     assert.hasType('Finds an open port', Number, options.port);
     assert.equal('Parses command from scripts.start', 'node', options.command);
     assert.deepEqual('Parses commandArgs from scripts.start',
-      [ 'server.js', 'Quinn' ], options.commandArgs);
+      ['server.js', 'Quinn'], options.commandArgs);
   });
 
   it('can actually spawn', async () => {

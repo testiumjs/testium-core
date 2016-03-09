@@ -24,7 +24,7 @@ describe('Proxy', () => {
       root: HELLO_WORLD,
       app: { port: 3041 },
     });
-    const { proxy, application } = await spawnServer(config, [ Proxy, App ]);
+    const { proxy, application } = await spawnServer(config, [Proxy, App]);
     proxy.rawProcess.kill();
     application.rawProcess.kill();
   });
