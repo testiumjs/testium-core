@@ -12,7 +12,7 @@ describe('spawnServer', () => {
       getOptions() {
         return {
           command: process.execPath,
-          commandArgs: [ 'examples/hello-world/server.js', 'Robin' ],
+          commandArgs: ['examples/hello-world/server.js', 'Robin'],
           port: 3000,
         };
       },
@@ -34,7 +34,7 @@ describe('spawnServer', () => {
         getOptions() {
           return {
             command: process.execPath,
-            commandArgs: [ 'examples/throws/server.js', 'Robin' ],
+            commandArgs: ['examples/throws/server.js', 'Robin'],
             port: 3040,
           };
         },
@@ -56,7 +56,7 @@ describe('spawnServer', () => {
         getOptions() {
           return {
             command: process.execPath,
-            commandArgs: [ 'examples/hello-world/server.js', 'Robin' ],
+            commandArgs: ['examples/hello-world/server.js', 'Robin'],
             verifyTimeout: 250,
             port: 3001, // wrong port on purpose
           };

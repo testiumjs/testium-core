@@ -2,7 +2,7 @@ import assert from 'assertive';
 import Gofer from 'gofer';
 import Bluebird from 'bluebird';
 
-import {getTestium, getBrowser} from '../';
+import { getTestium, getBrowser } from '../';
 
 const gofer = new Gofer({
   globalDefaults: {},
