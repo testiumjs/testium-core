@@ -106,4 +106,20 @@ describe('testium-core', () => {
       });
     });
   });
+
+  describe('getTestium', () => {
+    it('handles alternating drivers', async () => {
+      testium = await getTestium({ driver: 'wd' });
+      assert.hasType('first wd driver has assertStatusCode()',
+        Function, testium.browser.assertStatusCode);
+
+      testium = await getTestium({ driver: 'sync' });
+      assert.hasType('second sync driver has assert.* functions',
+        Object, testium.browser.assert);
+
+      testium = await getTestium({ driver: 'wd' });
+      assert.hasType('second wd driver has assertStatusCode()',
+        Function, testium.browser.assertStatusCode);
+    });
+  });
 });
