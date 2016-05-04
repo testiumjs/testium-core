@@ -50,6 +50,7 @@
     "mocha": "^2.0.0",
     "nlm": "^2.0.0",
     "testium-driver-sync": "^1.0.3",
+    "testium-driver-wd": "^1.2.3",
     "testium-example-app": "^1.0.5"
   },
   "author": {
