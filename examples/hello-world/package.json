@@ -1,6 +1,6 @@
 {
   "name": "testium-core.hello-world",
   "scripts": {
-    "start": "node server.js Quinn"
+    "start": "DEBUG=* NODE_ENV=development node server.js Quinn"
   }
 }
