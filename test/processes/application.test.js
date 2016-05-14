@@ -14,6 +14,8 @@ describe('App', () => {
     const options = await App.getOptions(config);
     assert.hasType('Finds an open port', Number, options.port);
     assert.equal('Parses command from scripts.start', 'node', options.command);
+    assert.equal('Parses environment variables in scripts.start', '*', options.spawnOpts.env.DEBUG);
+    assert.equal('Does not override NODE_ENV', 'test', options.spawnOpts.env.NODE_ENV);
     assert.deepEqual('Parses commandArgs from scripts.start',
       ['server.js', 'Quinn'], options.commandArgs);
   });
