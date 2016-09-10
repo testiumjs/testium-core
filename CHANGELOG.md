@@ -1,3 +1,9 @@
+### 1.5.0
+
+* feat: use proxy.host for remote selenium grid - **[@dbushong](https://github.com/dbushong)** [#27](https://github.com/testiumjs/testium-core/pull/27)
+  - [`9bd6642`](https://github.com/testiumjs/testium-core/commit/9bd66424bea8798eef197c083aa10039193e3ae7) **feat:** use proxy.host for remote selenium grid
+
+
 ### 1.4.8
 
 * fix: switch cleanly between driver types per-file - **[@dbushong](https://github.com/dbushong)** [#23](https://github.com/testiumjs/testium-core/pull/23)
