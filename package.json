@@ -35,6 +35,7 @@
     "qs": "^4.0.0",
     "rc": "^1.1.1",
     "read-package-json": "^2.0.0",
+    "reverse-tunnel-ssh": "^1.1.0",
     "selenium-download": "^2.0.0",
     "subprocess": "~0.3.0",
     "testium-cookie": "^1.0.0"
@@ -51,8 +52,9 @@
     "gofer": "^2.4.5",
     "mocha": "^3.1.2",
     "nlm": "^3.0.0",
+    "ssh2": "^0.5.2",
     "testium-driver-sync": "^1.0.3",
-    "testium-driver-wd": "^1.2.3",
+    "testium-driver-wd": "^1.3.0",
     "testium-example-app": "^1.0.5"
   },
   "author": {
