@@ -12,7 +12,7 @@ describe('Phantom', () => {
     const options = await Phantom.getOptions(config);
     assert.hasType('Finds an open port', Number, options.port);
     assert.equal('Sets the selenium server url',
-      'http://127.0.0.1:' + options.port + '/wd/hub',
+      `http://127.0.0.1:${options.port}/wd/hub`,
       config.get('selenium.serverUrl'));
   });
 

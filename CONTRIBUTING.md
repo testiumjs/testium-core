@@ -7,7 +7,8 @@
 This document outlines some of the practices we care about.
 If you have any questions or suggestions about the process,
 feel free to [open an issue](#reporting-issues)
-.
+ or [reach out to us directly](#contact).
+
 ## How Can I Contribute?
 
 ### Reporting Issues
@@ -145,3 +146,6 @@ A simple bug fix:
 fix: Handle multi-byte characters in search logic
 ```
 
+## Contact
+
+* Chat: [http://signup.testiumjs.com/](http://signup.testiumjs.com/)

@@ -17,7 +17,7 @@ describe('Selenium', () => {
     selenium.rawProcess.kill();
 
     assert.equal('Sets the selenium server url',
-      'http://127.0.0.1:' + config.get('selenium.port') + '/wd/hub',
+      `http://127.0.0.1:${config.get('selenium.port')}/wd/hub`,
       config.get('selenium.serverUrl'));
   });
 });

@@ -6,7 +6,7 @@ import spawnServer from '../lib/spawn-server';
 describe('spawnServer', () => {
   it('spawns a simple node http server', async () => {
     const { helloWorld } = await spawnServer(new Config({
-      root: __dirname + '/tmp/server',
+      root: `${__dirname}/tmp/server`,
     }), {
       name: 'helloWorld',
       getOptions() {
@@ -28,7 +28,7 @@ describe('spawnServer', () => {
   it('handles a child that fails to start', async () => {
     try {
       await spawnServer(new Config({
-        root: __dirname + '/tmp/server',
+        root: `${__dirname}/tmp/server`,
       }), {
         name: 'throws',
         getOptions() {
@@ -50,7 +50,7 @@ describe('spawnServer', () => {
   it('fails for a child that takes too long to listen', async () => {
     try {
       await spawnServer(new Config({
-        root: __dirname + '/tmp/server',
+        root: `${__dirname}/tmp/server`,
       }), {
         name: 'hello-world',
         getOptions() {
