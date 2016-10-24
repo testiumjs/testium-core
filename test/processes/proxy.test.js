@@ -21,12 +21,12 @@ describe('Proxy', () => {
     assert.hasType('Finds an open port', Number, options.port);
     assert.equal('Passes in the app port as the 2nd param to the child',
       '3041', options.commandArgs[1]);
-    assert.equal('http://127.0.0.1:' + options.port, config.get('proxy.targetUrl'));
+    assert.equal(`http://127.0.0.1:${options.port}`, config.get('proxy.targetUrl'));
   });
 
   it('can generate remote-selenium spawn options', async () => {
     const config = new Config(
-      { app: { port: 3041 }, selenium: { serverUrl: 'http://example.com' } }
+      { app: { port: '3041' }, selenium: { serverUrl: 'http://example.com' } }
     );
     const [options, hostname] = await Bluebird.all([
       Proxy.getOptions(config),
@@ -39,10 +39,26 @@ describe('Proxy', () => {
   it('can actually spawn', async () => {
     const config = new Config({
       root: HELLO_WORLD,
-      app: { port: 3041 },
+      app: { port: '3041' },
     });
     const { proxy, application } = await spawnServer(config, [Proxy, App]);
     proxy.rawProcess.kill();
     application.rawProcess.kill();
   });
+
+  it('can use an already tunneled port', async () => {
+    const config = new Config({
+      root: HELLO_WORLD,
+      app: { port: '3041' },
+      driver: 'wd',
+      proxy: { tunnel: { host: 'tun-host', port: '4242' } },
+    });
+    const { proxy, application } = await spawnServer(config, [Proxy, App]);
+    assert.equal('http://tun-host:4242', proxy.launchArguments[3]);
+    proxy.rawProcess.kill();
+    application.rawProcess.kill();
+  });
+
+  // TODO: something with ./ssh-server
+  it('can open an ssh tunnel to the proxy');
 });

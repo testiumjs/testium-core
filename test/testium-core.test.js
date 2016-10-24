@@ -37,7 +37,7 @@ describe('testium-core', () => {
 
     it('supports additional options', async () => {
       const response = await fetchResponse(
-        testium.getNewPageUrl('/echo', { query: { 'x': 'y' } }), { json: true });
+        testium.getNewPageUrl('/echo', { query: { x: 'y' } }), { json: true });
 
       const echo = response.body;
       assert.truthy('Sends a valid JSON response', echo);
@@ -46,7 +46,7 @@ describe('testium-core', () => {
 
       assert.truthy('Sets a cookie', response.headers['set-cookie']);
       assert.include('Sets a _testium_ cookie',
-        '_testium_=', '' + response.headers['set-cookie']);
+        '_testium_=', `${response.headers['set-cookie']}`);
     });
   });
 

@@ -16,7 +16,7 @@ function enterDirectory(relative) {
 describe('Config', () => {
   describe('Config::set', () => {
     let config;
-    beforeEach(() => config = new Config({ original: 42 }));
+    beforeEach(() => { config = new Config({ original: 42 }); });
 
     it('changes existing values', () => {
       config.set('original', 13);
@@ -31,13 +31,15 @@ describe('Config', () => {
 
   describe('Config::getBool', () => {
     let config;
-    beforeEach(() => config = new Config({
-      boolFalse: false,
-      boolTrue: true,
-      strFalse: 'false',
-      strTrue: 'true',
-      str0: '0',
-    }));
+    beforeEach(() => {
+      config = new Config({
+        boolFalse: false,
+        boolTrue: true,
+        strFalse: 'false',
+        strTrue: 'true',
+        str0: '0',
+      });
+    });
 
     it('handles bools and strings correctly', () => {
       assert.equal(false, config.getBool('boolFalse'));
@@ -93,7 +95,7 @@ describe('Config', () => {
       enterDirectory('../examples/rcfile');
 
       let config;
-      beforeEach(() => config = Config.load());
+      beforeEach(() => { config = Config.load(); });
 
       it('reads `launch` from the rc file', () => {
         assert.equal('launch is correctly read from the rc file',

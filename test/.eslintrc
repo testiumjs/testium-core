@@ -1,5 +1,5 @@
 {
-  "extends": "groupon/base",
+  "extends": "groupon",
   "env": {
     "mocha": true
   },
