@@ -1,3 +1,10 @@
+### 1.6.0
+
+* Add support for `proxy.tunnel` - **[@dbushong](https://github.com/dbushong)** [#28](https://github.com/testiumjs/testium-core/pull/28)
+  - [`e903115`](https://github.com/testiumjs/testium-core/commit/e903115df9494b13ce2ea728a6d607be205099e6) **chore:** update nlm stuffs
+  - [`ac85f32`](https://github.com/testiumjs/testium-core/commit/ac85f3286671ebbd390b63beabb34d16c250756f) **feat:** add support for proxy.tunnel.host
+
+
 ### 1.5.0
 
 * feat: use proxy.host for remote selenium grid - **[@dbushong](https://github.com/dbushong)** [#27](https://github.com/testiumjs/testium-core/pull/27)
