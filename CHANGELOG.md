@@ -1,3 +1,10 @@
+### 1.7.0
+
+* feat: tunnel: checks ~/.ssh for keys if no agent - **[@dbushong](https://github.com/dbushong)** [#30](https://github.com/testiumjs/testium-core/pull/30)
+  - [`f345b0d`](https://github.com/testiumjs/testium-core/commit/f345b0d393fe51c98d1c5115ea231f9ef3833a79) **feat:** tunnel: checks ~/.ssh for keys if no agent
+  - [`7957cd8`](https://github.com/testiumjs/testium-core/commit/7957cd846d8bf01b96da207b8a697dd5c296aabf) **test:** use & verify dynamic ports for proxy testing
+
+
 ### 1.6.0
 
 * Add support for `proxy.tunnel` - **[@dbushong](https://github.com/dbushong)** [#28](https://github.com/testiumjs/testium-core/pull/28)
