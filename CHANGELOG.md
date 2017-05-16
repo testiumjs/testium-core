@@ -1,3 +1,11 @@
+### 1.7.1
+
+* fix: fail quickly on aborted client request - **[@dbushong](https://github.com/dbushong)** [#33](https://github.com/testiumjs/testium-core/pull/33)
+  - [`ce08240`](https://github.com/testiumjs/testium-core/commit/ce082401cd53ae3099ffff478adf24088dca3dd3) **fix:** fail quickly on aborted client request
+  - [`1c370c4`](https://github.com/testiumjs/testium-core/commit/1c370c4ca6a86cb794f0e598e5c08a90e72b50fa) **chore:** test on node 4 & 6, fix java
+  - [`bbfd324`](https://github.com/testiumjs/testium-core/commit/bbfd324a2ddd4450ee3f6e42e3a1e2775bc3e6ef) **fix:** make selenium standalone args 3.x compat
+
+
 ### 1.7.0
 
 * feat: tunnel: checks ~/.ssh for keys if no agent - **[@dbushong](https://github.com/dbushong)** [#30](https://github.com/testiumjs/testium-core/pull/30)
