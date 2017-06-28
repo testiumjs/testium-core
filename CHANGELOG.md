@@ -1,3 +1,9 @@
+### 1.7.2
+
+* fix: properly invoke selenium.jar with -debug flag - **[@dbushong](https://github.com/dbushong)** [#35](https://github.com/testiumjs/testium-core/pull/35)
+  - [`76f1358`](https://github.com/testiumjs/testium-core/commit/76f13586d852783a0f5e723cabd8a87f041d188e) **fix:** properly invoke selenium.jar with -debug flag
+
+
 ### 1.7.1
 
 * fix: fail quickly on aborted client request - **[@dbushong](https://github.com/dbushong)** [#33](https://github.com/testiumjs/testium-core/pull/33)
