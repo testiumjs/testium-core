@@ -6,3 +6,4 @@ test/tmp
 examples/**/log
 test/log
 bin
+/package-lock.json
