@@ -1,3 +1,9 @@
+### 1.7.3
+
+* selenium invocation -debug argument - **[@dbushong](https://github.com/dbushong)** [#36](https://github.com/testiumjs/testium-core/pull/36)
+  - [`346055d`](https://github.com/testiumjs/testium-core/commit/346055d57307a00712724ce34bae51ba62b27d2d) **fix:** selenium invocation -debug argument
+
+
 ### 1.7.2
 
 * fix: properly invoke selenium.jar with -debug flag - **[@dbushong](https://github.com/dbushong)** [#35](https://github.com/testiumjs/testium-core/pull/35)
