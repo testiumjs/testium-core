@@ -1,3 +1,9 @@
+### 1.8.0
+
+* use chromedriver directly without jar - **[@dbushong](https://github.com/dbushong)** [#37](https://github.com/testiumjs/testium-core/pull/37)
+  - [`f5c9220`](https://github.com/testiumjs/testium-core/commit/f5c9220cf823656dbf6de9cf0b1e745e3787e5c3) **feat:** use chromedriver directly without jar
+
+
 ### 1.7.3
 
 * selenium invocation -debug argument - **[@dbushong](https://github.com/dbushong)** [#36](https://github.com/testiumjs/testium-core/pull/36)
