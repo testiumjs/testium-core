@@ -1,3 +1,9 @@
+### 1.8.1
+
+* chrome --no-sandbox when run as root - **[@dbushong](https://github.com/dbushong)** [#38](https://github.com/testiumjs/testium-core/pull/38)
+  - [`a1af370`](https://github.com/testiumjs/testium-core/commit/a1af370bbee31d8639e100d4b7278cc05a6c41d8) **fix:** chrome --no-sandbox when run as root
+
+
 ### 1.8.0
 
 * use chromedriver directly without jar - **[@dbushong](https://github.com/dbushong)** [#37](https://github.com/testiumjs/testium-core/pull/37)
