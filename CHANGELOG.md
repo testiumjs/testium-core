@@ -1,3 +1,12 @@
+### 1.9.0
+
+* Pass remote debugging port for chrome - **[@anil-groupon](https://github.com/anil-groupon)** [#39](https://github.com/testiumjs/testium-core/pull/39)
+  - [`209ebae`](https://github.com/testiumjs/testium-core/commit/209ebae6dd8751e233a646655f2ea23c9a8eaa32) **feat:** Pass remote debugging port for chrome
+  - [`2274697`](https://github.com/testiumjs/testium-core/commit/227469762a78c5a749a8f060f63a5d21d53cab4c) **chore:** handle review comments
+  - [`c942a21`](https://github.com/testiumjs/testium-core/commit/c942a21c0260788553c2fbdca6ca8fcdf32914d8) **chore:** PR review comment
+  - [`115d0c7`](https://github.com/testiumjs/testium-core/commit/115d0c7d6f0665d019c1616ec608bf7c2ac9a9ef) **chore:** remove check for the config flag
+
+
 ### 1.8.1
 
 * chrome --no-sandbox when run as root - **[@dbushong](https://github.com/dbushong)** [#38](https://github.com/testiumjs/testium-core/pull/38)
