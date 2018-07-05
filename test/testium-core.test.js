@@ -57,6 +57,18 @@ describe('testium-core', () => {
     });
   });
 
+  describe('getChromeDevtoolsPort', () => {
+    it('returns a number >= 1024 in chrome, throws otherwise', () => {
+      if (testium.browser.capabilities.browserName === 'chrome') {
+        assert.hasType(Number, testium.getChromeDevtoolsPort());
+        assert.expect(testium.getChromeDevtoolsPort() >= 1024);
+      } else {
+        const err = assert.throws(() => testium.getChromeDevtoolsPort());
+        assert.equal('Can only get devtools port for chrome', err.message);
+      }
+    });
+  });
+
   describe('basic navigation', () => {
     it('can navigate to /index.html', async () => {
       const browser = await getBrowser();
