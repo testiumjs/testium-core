@@ -1,3 +1,11 @@
+### 1.10.0
+
+* Revert "Merge pull request #39 from anil-groupon/pass-debug-port" - **[@jkrems](https://github.com/jkrems)** [#40](https://github.com/testiumjs/testium-core/pull/40)
+  - [`a7b2116`](https://github.com/testiumjs/testium-core/commit/a7b21161d6aacf2ecc21f45bf5d0806f3e5bed38) **fix:** Revert "Merge pull request #39 from anil-groupon/pass-debug-port"
+  - [`ee2e251`](https://github.com/testiumjs/testium-core/commit/ee2e251f604c1151861c015748c950c48aa92994) **feat:** reimplement getChromeDevtoolsPort
+  - [`30e3e9a`](https://github.com/testiumjs/testium-core/commit/30e3e9ae458ce3f66f31100dbaf01345ef6b70fb) **feat:** Add debug log for devtools port
+
+
 ### 1.9.0
 
 * Pass remote debugging port for chrome - **[@anil-groupon](https://github.com/anil-groupon)** [#39](https://github.com/testiumjs/testium-core/pull/39)
