@@ -1,3 +1,13 @@
+### 1.11.0
+
+* chore: add --disable-dev-shm-usage for chromeOptions - **[@amkirwan](https://github.com/amkirwan)** [#41](https://github.com/testiumjs/testium-core/pull/41)
+  - [`17dcc8a`](https://github.com/testiumjs/testium-core/commit/17dcc8aa3d380f8432eea0d4c3f4ff28d55382cc) **chore:** add --disable-dev-shm-usage for chromeOptions
+  - [`9013c32`](https://github.com/testiumjs/testium-core/commit/9013c3258fc1e06631558c57ed233e756c2b67e1) **chore:** update travis.yml with node10
+  - [`9cc6144`](https://github.com/testiumjs/testium-core/commit/9cc6144c7fcc039de4dad8c541ab2d4279b94544) **feat:** check for docker env when setting --disable-dev-shm-usage
+  - [`56dc3fd`](https://github.com/testiumjs/testium-core/commit/56dc3fd9de5b153f27b453ef7eb18900fb52eb1a) **chore:** use ternary for err check
+  - [`31b4e18`](https://github.com/testiumjs/testium-core/commit/31b4e180a8f558ade58dfb0989ffa7381680f352) **fix:** pr comments
+
+
 ### 1.10.0
 
 * Revert "Merge pull request #39 from anil-groupon/pass-debug-port" - **[@jkrems](https://github.com/jkrems)** [#40](https://github.com/testiumjs/testium-core/pull/40)
