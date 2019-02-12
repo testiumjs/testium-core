@@ -98,4 +98,40 @@ describe('Launch all processes Chrome', () => {
 
     unpatch();
   });
+
+  it('appends additional options to base chromeOptions as default option', async () => {
+    const newConfig = new Config({
+      ...config,
+      desiredCapabilities: { chromeOptions: { args: ['--foobar'] } },
+    });
+
+    const procs = await launchAllProcesses(newConfig);
+    const { args } = newConfig.desiredCapabilities.chromeOptions;
+    assert.deepEqual([...chromeOptions, '--foobar'], args);
+    killProcs(procs);
+  });
+
+  it('appends additional options to base chromeOptions with merge: true', async () => {
+    const newConfig = new Config({
+      ...config,
+      desiredCapabilities: { chromeOptions: { merge: true, args: ['--foobar'] } },
+    });
+
+    const procs = await launchAllProcesses(newConfig);
+    const { args } = newConfig.desiredCapabilities.chromeOptions;
+    assert.deepEqual([...chromeOptions, '--foobar'], args);
+    killProcs(procs);
+  });
+
+  it('replaces the base chromeOptions with merge: false', async () => {
+    const newConfig = new Config({
+      ...config,
+      desiredCapabilities: { chromeOptions: { merge: false, args: ['--foobar'] } },
+    });
+
+    const procs = await launchAllProcesses(newConfig);
+    const { args } = newConfig.desiredCapabilities.chromeOptions;
+    assert.deepEqual(['--foobar'], args);
+    killProcs(procs);
+  });
 });
