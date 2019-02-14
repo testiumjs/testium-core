@@ -1,3 +1,11 @@
+### 1.12.0
+
+* feat: add config option to merge chromeOptions - **[@amkirwan](https://github.com/amkirwan)** [#42](https://github.com/testiumjs/testium-core/pull/42)
+  - [`264b081`](https://github.com/testiumjs/testium-core/commit/264b0813278657aee625f921640bd45c352590bd) **feat:** add config option to merge chromeOptions
+  - [`68e552e`](https://github.com/testiumjs/testium-core/commit/68e552e20cccba92b9c7da1490f44321eb74247c) **fix:** address pr comments
+  - [`238cdcc`](https://github.com/testiumjs/testium-core/commit/238cdcc2201ab8f8be9167b714e34e85e63507e6) **fix:** pr comments
+
+
 ### 1.11.0
 
 * chore: add --disable-dev-shm-usage for chromeOptions - **[@amkirwan](https://github.com/amkirwan)** [#41](https://github.com/testiumjs/testium-core/pull/41)
