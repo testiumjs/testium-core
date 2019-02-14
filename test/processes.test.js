@@ -29,8 +29,11 @@ describe('Launch all processes PhantomJS', () => {
   it('launches all the processes', async () => {
     const procs = await launchAllProcesses(config);
     const procNames = Object.keys(procs).sort();
-    assert.deepEqual('Spawns app, phantom, and proxy',
-      ['application', 'phantomjs', 'proxy'], procNames);
+    assert.deepEqual(
+      'Spawns app, phantom, and proxy',
+      ['application', 'phantomjs', 'proxy'],
+      procNames
+    );
     killProcs(procs);
   });
 });
@@ -43,7 +46,8 @@ describe('Launch all processes Chrome', () => {
     '--disk-cache-dir=/dev/null',
     '--disable-cache',
     '--disable-desktop-notifications',
-    '--headless'];
+    '--headless',
+  ];
 
   let config;
   beforeEach(() => {
@@ -61,8 +65,11 @@ describe('Launch all processes Chrome', () => {
   it('launches all the processes', async () => {
     const procs = await launchAllProcesses(config);
     const procNames = Object.keys(procs).sort();
-    assert.deepEqual('Spawns app, chrome, and proxy',
-      ['application', 'chromedriver', 'proxy'], procNames);
+    assert.deepEqual(
+      'Spawns app, chrome, and proxy',
+      ['application', 'chromedriver', 'proxy'],
+      procNames
+    );
     killProcs(procs);
   });
 
@@ -97,5 +104,104 @@ describe('Launch all processes Chrome', () => {
     killProcs(procs);
 
     unpatch();
+  });
+
+  describe('configure desiredCapabilities.chromeOptions', () => {
+    it('replaces the base chromeOptions as default option', async () => {
+      const newConfig = new Config({
+        ...config,
+        desiredCapabilities: { chromeOptions: { args: ['--foobar'] } },
+      });
+
+      const procs = await launchAllProcesses(newConfig);
+      const { args } = newConfig.desiredCapabilities.chromeOptions;
+      assert.deepEqual(['--foobar'], args);
+      killProcs(procs);
+    });
+
+    context('when mergeArgs: false', () => {
+      it('replaces base chromeOptions with mergeArgs: false', async () => {
+        const newConfig = new Config({
+          ...config,
+          desiredCapabilities: {
+            chromeOptions: { mergeArgs: false, args: ['--foobar'] },
+          },
+        });
+
+        const procs = await launchAllProcesses(newConfig);
+        const { args } = newConfig.desiredCapabilities.chromeOptions;
+        assert.deepEqual(['--foobar'], args);
+        killProcs(procs);
+      });
+    });
+
+    context('when mergeArgs: true', () => {
+      it('handles args that only have keys', async () => {
+        const newConfig = new Config({
+          ...config,
+          desiredCapabilities: {
+            chromeOptions: {
+              mergeArgs: true,
+              args: ['--disable-application-cache', '--foo'],
+            },
+          },
+        });
+
+        const procs = await launchAllProcesses(newConfig);
+        const { args } = newConfig.desiredCapabilities.chromeOptions;
+        assert.deepEqual([...chromeOptions, '--foo'], args);
+        killProcs(procs);
+      });
+
+      it('handles args that have options with key=value', async () => {
+        const newConfig = new Config({
+          ...config,
+          desiredCapabilities: {
+            chromeOptions: {
+              mergeArgs: true,
+              args: ['--foo=false', '--bar=true', '--window-size=1280,1696'],
+            },
+          },
+        });
+
+        const procs = await launchAllProcesses(newConfig);
+        const { args } = newConfig.desiredCapabilities.chromeOptions;
+        assert.deepEqual(
+          [
+            ...chromeOptions,
+            '--foo=false',
+            '--bar=true',
+            '--window-size=1280,1696',
+          ],
+          args
+        );
+        killProcs(procs);
+      });
+
+      it('handles updating base chromeOptions with key=value', async () => {
+        const newConfig = new Config({
+          ...config,
+          desiredCapabilities: {
+            chromeOptions: {
+              mergeArgs: true,
+              args: ['--disk-cache-size=2', '--disk-cache-dir=./tmp'],
+            },
+          },
+        });
+
+        const procs = await launchAllProcesses(newConfig);
+        const { args } = newConfig.desiredCapabilities.chromeOptions;
+        assert.deepEqual(
+          [
+            ...chromeOptions.slice(0, 2),
+            '--disk-cache-size=2',
+            '--disk-cache-dir=./tmp',
+            ...chromeOptions.slice(4),
+          ],
+          args
+        );
+        killProcs(procs);
+      });
+    });
   });
 });
