@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - 8.11.3
-  - 10.5.0
+  - 8.16.0
+  - 10.15.3
 deploy:
   - provider: script
     script: ./node_modules/.bin/nlm release
@@ -17,5 +17,3 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
-before_install:
-  - npm i -g npm@^6
