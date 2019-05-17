@@ -1,3 +1,13 @@
+### 1.12.1
+
+* headless=false - **[@dbushong](https://github.com/dbushong)** [#43](https://github.com/testiumjs/testium-core/pull/43)
+  - [`38d0524`](https://github.com/testiumjs/testium-core/commit/38d05249c7e3067f7707f6794bead88b9bdc3d52) **fix:** support testium_chrome__headless=false
+  - [`ccfd174`](https://github.com/testiumjs/testium-core/commit/ccfd17457fe145e696a79a49601f8057b922528f) **chore:** switch to npm6
+  - [`f5184cd`](https://github.com/testiumjs/testium-core/commit/f5184cd3ace5c17ca5f0fc1d8cd5975c89b3ae2c) **chore:** travis: try removing oracle-java setting
+  - [`1db5303`](https://github.com/testiumjs/testium-core/commit/1db53036a9799990f37c51f97d8a0a3617877623) **chore:** upgrade node versions
+* [`a8b40d5`](https://github.com/testiumjs/testium-core/commit/a8b40d5bad9a8494f1cef01b8462e220a2d776d8) **chore:** fix .travis.yml build version
+
+
 ### 1.12.0
 
 * feat: add config option to merge chromeOptions - **[@amkirwan](https://github.com/amkirwan)** [#42](https://github.com/testiumjs/testium-core/pull/42)
