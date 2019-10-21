@@ -69,26 +69,53 @@ describe('testium-core', () => {
     });
   });
 
+
   describe('basic navigation', () => {
-    it('can navigate to /index.html', async () => {
-      const browser = await getBrowser();
-      browser.navigateTo('/index.html');
-      assert.equal('Test Title', browser.getPageTitle());
+    describe('via wd driver', () => {
+      it('can navigate to /index.html', async () => {
+        const { browser } = await getTestium();
+        await browser.navigateTo('/index.html');
+        assert.equal('Test Title', await browser.getPageTitle());
+      });
+
+      it('preserves #hash segments of the url', async () => {
+        const { browser } = await getTestium();
+        await browser.navigateTo('/echo#!/foo?yes=it-is', {
+          headers: {
+            'x-random-data': 'present',
+          },
+        });
+        const hash = await browser.evaluate(() => window.location.href);
+        assert.equal('http://127.0.0.1:4445/echo#!/foo?yes=it-is', hash);
+
+        // Making sure that headers are correctly forwarded
+        const element = await browser.getElement('pre');
+        const echo = JSON.parse(await element.text());
+        assert.equal('present', echo.headers['x-random-data']);
+      });
     });
 
-    it('preserves #hash segments of the url', async () => {
-      const browser = await getBrowser();
-      browser.navigateTo('/echo#!/foo?yes=it-is', {
-        headers: {
-          'x-random-data': 'present',
-        },
+    describe('via sync driver', () => {
+      it('can navigate to /index.html', async () => {
+        const browser = await getBrowser({ driver: 'sync' });
+        browser.navigateTo('/index.html');
+        assert.equal('Test Title', browser.getPageTitle());
       });
-      const hash = browser.evaluate('return "" + window.location.hash;');
-      assert.equal('#!/foo?yes=it-is', hash);
 
-      // Making sure that headers are correctly forwarded
-      const echo = JSON.parse(browser.getElement('pre').get('text'));
-      assert.equal('present', echo.headers['x-random-data']);
+      it('preserves #hash segments of the url', async () => {
+        const browser = await getBrowser({ driver: 'sync' });
+        browser.navigateTo('/echo#!/foo?yes=it-is', {
+          headers: {
+            'x-random-data': 'present',
+          },
+        });
+        const hash = browser.evaluate('return "" + window.location.hash;');
+        assert.equal('#!/foo?yes=it-is', hash);
+
+        // Making sure that headers are correctly forwarded
+        const echo = JSON.parse(browser.getElement('pre').get('text'));
+        assert.equal('present', echo.headers['x-random-data']);
+      });
     });
   });
 
