@@ -69,7 +69,6 @@ describe('testium-core', () => {
     });
   });
 
-
   describe('basic navigation', () => {
     describe('via wd driver', () => {
       it('can navigate to /index.html', async () => {
