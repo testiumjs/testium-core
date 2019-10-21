@@ -1,17 +1,17 @@
 import assert from 'assertive';
 import Gofer from 'gofer';
-import Bluebird from 'bluebird';
 
 import { getTestium, getBrowser } from '../';
 
 const gofer = new Gofer({
   globalDefaults: {},
 });
-function fetch(uri, options) {
-  return Bluebird.resolve(gofer.fetch(uri, options));
+
+async function fetch(uri, options) {
+  return gofer.fetch(uri, options);
 }
-function fetchResponse(uri, options) {
-  return Bluebird.resolve(gofer.fetch(uri, options).getResponse());
+async function fetchResponse(uri, options) {
+  return gofer.fetch(uri, options).getResponse();
 }
 
 describe('testium-core', () => {
