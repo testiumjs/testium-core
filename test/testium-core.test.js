@@ -3,15 +3,14 @@ import Gofer from 'gofer';
 
 import { getTestium, getBrowser } from '../';
 
-const gofer = new Gofer({
-  globalDefaults: {},
-});
-
-async function fetch(uri, options) {
-  return gofer.fetch(uri, options);
-}
-async function fetchResponse(uri, options) {
-  return gofer.fetch(uri, options).getResponse();
+async function fetch(uri, opts) {
+  try {
+    return await Gofer.fetch(uri);
+  } catch (err) {
+    const { headers } = await Gofer.fetch(uri,
+      { ...opts, ...{ minStatusCode: 302, maxStatusCode: 302 } });
+    return Gofer.fetch(headers.location);
+  }
 }
 
 describe('testium-core', () => {
@@ -32,14 +31,14 @@ describe('testium-core', () => {
 
     it('redirects to the target url', async () => {
       const result = await fetch(testium.getNewPageUrl('/error'));
-      assert.equal('500 SERVER ERROR', result);
+      assert.equal('500 SERVER ERROR', await result.text());
     });
 
     it('supports additional options', async () => {
-      const response = await fetchResponse(
-        testium.getNewPageUrl('/echo', { query: { x: 'y' } }), { json: true });
+      const response = await fetch(
+        testium.getNewPageUrl('/echo', { query: { x: 'y' } }));
 
-      const echo = response.body;
+      const echo = await response.json();
       assert.truthy('Sends a valid JSON response', echo);
       assert.equal('GET', echo.method);
       assert.equal('/echo?x=y', echo.url);
@@ -53,7 +52,7 @@ describe('testium-core', () => {
   describe('getInitialUrl', () => {
     it('is a blank page', async () => {
       const result = await fetch(testium.getInitialUrl());
-      assert.equal('Initial url returns a blank page', '', result);
+      assert.equal('Initial url returns a blank page', '', await result.text());
     });
   });
 
