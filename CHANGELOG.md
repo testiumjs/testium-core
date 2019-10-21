@@ -1,3 +1,22 @@
+### 2.0.0
+
+#### Breaking Changes
+
+This change will force existent clients
+to update their code to either explicitly use the sync
+driver or use the async API
+
+*See: [`8749fde`](https://github.com/testiumjs/testium-core/commit/8749fdea404bc2d9e29d44ec6c9d385f5713b387)*
+
+#### Commits
+
+* change default driver to wd - **[@aotarola](https://github.com/aotarola)** [#45](https://github.com/testiumjs/testium-core/pull/45)
+  - [`8749fde`](https://github.com/testiumjs/testium-core/commit/8749fdea404bc2d9e29d44ec6c9d385f5713b387) **feat:** change default driver to wd
+  - [`2eb055e`](https://github.com/testiumjs/testium-core/commit/2eb055ee641b2be25d7f873c4c60db509b3d47ca) **test:** use async instead of Bluebird promises
+  - [`f900cb7`](https://github.com/testiumjs/testium-core/commit/f900cb77d877db00ded9d07f4705efcd73b41420) **test:** remove extra whitespace
+  - [`f1c360f`](https://github.com/testiumjs/testium-core/commit/f1c360ff4a0dd1837f009e5c35327abd48d28e4b) **chore:** npm audit fix
+
+
 ### 1.12.1
 
 * headless=false - **[@dbushong](https://github.com/dbushong)** [#43](https://github.com/testiumjs/testium-core/pull/43)
