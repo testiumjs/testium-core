@@ -1,17 +1,16 @@
 import assert from 'assertive';
 import Gofer from 'gofer';
-import Bluebird from 'bluebird';
 
 import { getTestium, getBrowser } from '../';
 
-const gofer = new Gofer({
-  globalDefaults: {},
-});
-function fetch(uri, options) {
-  return Bluebird.resolve(gofer.fetch(uri, options));
-}
-function fetchResponse(uri, options) {
-  return Bluebird.resolve(gofer.fetch(uri, options).getResponse());
+async function fetch(uri, opts) {
+  try {
+    return await Gofer.fetch(uri);
+  } catch (err) {
+    const { headers } = await Gofer.fetch(uri,
+      { ...opts, ...{ minStatusCode: 302, maxStatusCode: 302 } });
+    return Gofer.fetch(headers.location);
+  }
 }
 
 describe('testium-core', () => {
@@ -32,14 +31,14 @@ describe('testium-core', () => {
 
     it('redirects to the target url', async () => {
       const result = await fetch(testium.getNewPageUrl('/error'));
-      assert.equal('500 SERVER ERROR', result);
+      assert.equal('500 SERVER ERROR', await result.text());
     });
 
     it('supports additional options', async () => {
-      const response = await fetchResponse(
-        testium.getNewPageUrl('/echo', { query: { x: 'y' } }), { json: true });
+      const response = await fetch(
+        testium.getNewPageUrl('/echo', { query: { x: 'y' } }));
 
-      const echo = response.body;
+      const echo = await response.json();
       assert.truthy('Sends a valid JSON response', echo);
       assert.equal('GET', echo.method);
       assert.equal('/echo?x=y', echo.url);
@@ -53,7 +52,7 @@ describe('testium-core', () => {
   describe('getInitialUrl', () => {
     it('is a blank page', async () => {
       const result = await fetch(testium.getInitialUrl());
-      assert.equal('Initial url returns a blank page', '', result);
+      assert.equal('Initial url returns a blank page', '', await result.text());
     });
   });
 
@@ -70,25 +69,51 @@ describe('testium-core', () => {
   });
 
   describe('basic navigation', () => {
-    it('can navigate to /index.html', async () => {
-      const browser = await getBrowser();
-      browser.navigateTo('/index.html');
-      assert.equal('Test Title', browser.getPageTitle());
+    describe('via wd driver', () => {
+      it('can navigate to /index.html', async () => {
+        const { browser } = await getTestium();
+        await browser.navigateTo('/index.html');
+        assert.equal('Test Title', await browser.getPageTitle());
+      });
+
+      it('preserves #hash segments of the url', async () => {
+        const { browser } = await getTestium();
+        await browser.navigateTo('/echo#!/foo?yes=it-is', {
+          headers: {
+            'x-random-data': 'present',
+          },
+        });
+        const hash = await browser.evaluate(() => window.location.href);
+        assert.equal('http://127.0.0.1:4445/echo#!/foo?yes=it-is', hash);
+
+        // Making sure that headers are correctly forwarded
+        const element = await browser.getElement('pre');
+        const echo = JSON.parse(await element.text());
+        assert.equal('present', echo.headers['x-random-data']);
+      });
     });
 
-    it('preserves #hash segments of the url', async () => {
-      const browser = await getBrowser();
-      browser.navigateTo('/echo#!/foo?yes=it-is', {
-        headers: {
-          'x-random-data': 'present',
-        },
+    describe('via sync driver', () => {
+      it('can navigate to /index.html', async () => {
+        const browser = await getBrowser({ driver: 'sync' });
+        browser.navigateTo('/index.html');
+        assert.equal('Test Title', browser.getPageTitle());
       });
-      const hash = browser.evaluate('return "" + window.location.hash;');
-      assert.equal('#!/foo?yes=it-is', hash);
 
-      // Making sure that headers are correctly forwarded
-      const echo = JSON.parse(browser.getElement('pre').get('text'));
-      assert.equal('present', echo.headers['x-random-data']);
+      it('preserves #hash segments of the url', async () => {
+        const browser = await getBrowser({ driver: 'sync' });
+        browser.navigateTo('/echo#!/foo?yes=it-is', {
+          headers: {
+            'x-random-data': 'present',
+          },
+        });
+        const hash = browser.evaluate('return "" + window.location.hash;');
+        assert.equal('#!/foo?yes=it-is', hash);
+
+        // Making sure that headers are correctly forwarded
+        const echo = JSON.parse(browser.getElement('pre').get('text'));
+        assert.equal('present', echo.headers['x-random-data']);
+      });
     });
   });
 
