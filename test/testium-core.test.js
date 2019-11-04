@@ -93,8 +93,12 @@ describe('testium-core', () => {
             'x-random-data': 'present',
           },
         });
-        // eslint-disable-next-line no-undef
-        const hash = await browser.evaluate(() => window.location.href);
+        // need to use old syntax for as long as we're testing on phantom
+        // eslint-disable-next-line prefer-arrow-callback
+        const hash = await browser.evaluate(function() {
+          // eslint-disable-next-line no-undef
+          return window.location.href;
+        });
         assert.equal('http://127.0.0.1:4445/echo#!/foo?yes=it-is', hash);
 
         // Making sure that headers are correctly forwarded
