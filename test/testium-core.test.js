@@ -3,7 +3,7 @@
 const assert = require('assertive');
 const Gofer = require('gofer');
 
-const { getTestium, getBrowser } = require('../');
+const { getTestium } = require('../');
 
 async function fetch(uri, opts) {
   try {
@@ -103,29 +103,6 @@ describe('testium-core', () => {
         assert.equal('present', echo.headers['x-random-data']);
       });
     });
-
-    describe('via sync driver', () => {
-      it('can navigate to /index.html', async () => {
-        const browser = await getBrowser({ driver: 'sync' });
-        browser.navigateTo('/index.html');
-        assert.equal('Test Title', browser.getPageTitle());
-      });
-
-      it('preserves #hash segments of the url', async () => {
-        const browser = await getBrowser({ driver: 'sync' });
-        browser.navigateTo('/echo#!/foo?yes=it-is', {
-          headers: {
-            'x-random-data': 'present',
-          },
-        });
-        const hash = browser.evaluate('return "" + window.location.hash;');
-        assert.equal('#!/foo?yes=it-is', hash);
-
-        // Making sure that headers are correctly forwarded
-        const echo = JSON.parse(browser.getElement('pre').get('text'));
-        assert.equal('present', echo.headers['x-random-data']);
-      });
-    });
   });
 
   describe('cross-test side effects', () => {
@@ -152,31 +129,6 @@ describe('testium-core', () => {
         const pageSize = await testium.browser.getPageSize();
         assert.deepEqual({ height: 768, width: 1024 }, pageSize);
       });
-    });
-  });
-
-  describe('getTestium', () => {
-    it('handles alternating drivers', async () => {
-      testium = await getTestium({ driver: 'wd' });
-      assert.hasType(
-        'first wd driver has assertStatusCode()',
-        Function,
-        testium.browser.assertStatusCode
-      );
-
-      testium = await getTestium({ driver: 'sync' });
-      assert.hasType(
-        'second sync driver has assert.* functions',
-        Object,
-        testium.browser.assert
-      );
-
-      testium = await getTestium({ driver: 'wd' });
-      assert.hasType(
-        'second wd driver has assertStatusCode()',
-        Function,
-        testium.browser.assertStatusCode
-      );
     });
   });
 });
