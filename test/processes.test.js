@@ -38,7 +38,7 @@ describe('Launch all processes PhantomJS', () => {
   });
 });
 
-describe.skip('Launch all processes Chrome', () => {
+describe('Launch all processes Chrome', () => {
   const chromeOptions = [
     '--disable-application-cache',
     '--media-cache-size=1',
