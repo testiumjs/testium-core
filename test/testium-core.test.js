@@ -1,14 +1,18 @@
-import assert from 'assertive';
-import Gofer from 'gofer';
+'use strict';
 
-import { getTestium, getBrowser } from '../';
+const assert = require('assertive');
+const Gofer = require('gofer');
+
+const { getTestium, getBrowser } = require('../');
 
 async function fetch(uri, opts) {
   try {
     return await Gofer.fetch(uri);
   } catch (err) {
-    const { headers } = await Gofer.fetch(uri,
-      { ...opts, ...{ minStatusCode: 302, maxStatusCode: 302 } });
+    const { headers } = await Gofer.fetch(uri, {
+      ...opts,
+      ...{ minStatusCode: 302, maxStatusCode: 302 },
+    });
     return Gofer.fetch(headers.location);
   }
 }
@@ -23,10 +27,12 @@ describe('testium-core', () => {
 
   describe('getNewPageUrl', () => {
     it('ignores absolute urls', () => {
-      assert.equal('https://www.example.com/?a=b',
+      assert.equal(
+        'https://www.example.com/?a=b',
         testium.getNewPageUrl('https://www.example.com', {
           query: { a: 'b' },
-        }));
+        })
+      );
     });
 
     it('redirects to the target url', async () => {
@@ -36,7 +42,8 @@ describe('testium-core', () => {
 
     it('supports additional options', async () => {
       const response = await fetch(
-        testium.getNewPageUrl('/echo', { query: { x: 'y' } }));
+        testium.getNewPageUrl('/echo', { query: { x: 'y' } })
+      );
 
       const echo = await response.json();
       assert.truthy('Sends a valid JSON response', echo);
@@ -44,8 +51,11 @@ describe('testium-core', () => {
       assert.equal('/echo?x=y', echo.url);
 
       assert.truthy('Sets a cookie', response.headers['set-cookie']);
-      assert.include('Sets a _testium_ cookie',
-        '_testium_=', `${response.headers['set-cookie']}`);
+      assert.include(
+        'Sets a _testium_ cookie',
+        '_testium_=',
+        `${response.headers['set-cookie']}`
+      );
     });
   });
 
@@ -83,6 +93,7 @@ describe('testium-core', () => {
             'x-random-data': 'present',
           },
         });
+        // eslint-disable-next-line no-undef
         const hash = await browser.evaluate(() => window.location.href);
         assert.equal('http://127.0.0.1:4445/echo#!/foo?yes=it-is', hash);
 
@@ -147,16 +158,25 @@ describe('testium-core', () => {
   describe('getTestium', () => {
     it('handles alternating drivers', async () => {
       testium = await getTestium({ driver: 'wd' });
-      assert.hasType('first wd driver has assertStatusCode()',
-        Function, testium.browser.assertStatusCode);
+      assert.hasType(
+        'first wd driver has assertStatusCode()',
+        Function,
+        testium.browser.assertStatusCode
+      );
 
       testium = await getTestium({ driver: 'sync' });
-      assert.hasType('second sync driver has assert.* functions',
-        Object, testium.browser.assert);
+      assert.hasType(
+        'second sync driver has assert.* functions',
+        Object,
+        testium.browser.assert
+      );
 
       testium = await getTestium({ driver: 'wd' });
-      assert.hasType('second wd driver has assertStatusCode()',
-        Function, testium.browser.assertStatusCode);
+      assert.hasType(
+        'second wd driver has assertStatusCode()',
+        Function,
+        testium.browser.assertStatusCode
+      );
     });
   });
 });

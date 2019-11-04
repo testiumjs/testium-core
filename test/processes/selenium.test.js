@@ -1,10 +1,12 @@
-import path from 'path';
+'use strict';
 
-import assert from 'assertive';
+const path = require('path');
 
-import Config from '../../lib/config';
-import Selenium from '../../lib/processes/selenium';
-import spawnServer from '../../lib/spawn-server';
+const assert = require('assertive');
+
+const Config = require('../../lib/config');
+const Selenium = require('../../lib/processes/selenium');
+const spawnServer = require('../../lib/spawn-server');
 
 describe('Selenium', () => {
   it('can actually spawn, for firefox', async () => {
@@ -16,8 +18,10 @@ describe('Selenium', () => {
     const { selenium } = await spawnServer(config, Selenium);
     selenium.rawProcess.kill();
 
-    assert.equal('Sets the selenium server url',
+    assert.equal(
+      'Sets the selenium server url',
       `http://127.0.0.1:${config.get('selenium.port')}/wd/hub`,
-      config.get('selenium.serverUrl'));
+      config.get('selenium.serverUrl')
+    );
   });
 });

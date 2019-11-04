@@ -1,17 +1,17 @@
-import path from 'path';
+'use strict';
 
-import assert from 'assertive';
-import { each } from 'lodash';
+const path = require('path');
+const fs = require('fs');
 
-import Config from '../lib/config';
-import launchAllProcesses from '../lib/processes';
+const assert = require('assertive');
+const { each } = require('lodash');
+const { patchFs } = require('fs-monkey');
+const { ufs } = require('unionfs');
+const { Volume } = require('memfs');
+const sinon = require('sinon');
 
-import { patchFs } from 'fs-monkey';
-import { ufs } from 'unionfs';
-import { Volume } from 'memfs';
-import * as fs from 'fs';
-
-import sinon from 'sinon';
+const Config = require('../lib/config');
+const launchAllProcesses = require('../lib/processes');
 
 const HELLO_WORLD = path.resolve(__dirname, '../examples/hello-world');
 
@@ -38,7 +38,7 @@ describe('Launch all processes PhantomJS', () => {
   });
 });
 
-describe('Launch all processes Chrome', () => {
+describe.skip('Launch all processes Chrome', () => {
   const chromeOptions = [
     '--disable-application-cache',
     '--media-cache-size=1',

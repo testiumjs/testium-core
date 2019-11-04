@@ -1,5 +1,7 @@
-import ssh2 from 'ssh2';
-import Bluebird from 'bluebird';
+'use strict';
+
+const ssh2 = require('ssh2');
+const Bluebird = require('bluebird');
 
 const hostKey = `
 -----BEGIN RSA PRIVATE KEY-----
@@ -35,22 +37,27 @@ function startSSHServer() {
   const opts = { hostKeys: [hostKey] };
   return new Bluebird(resolve => {
     const server = new ssh2.Server(opts, client => {
-      client.on('authentication', ctx => { ctx.accept(); })
-            .on('ready', () => {
-              client.on('session', acceptSession => {
-                const session = acceptSession();
-                // something other than exec?
-                session.once('exec', acceptExec => { acceptExec(); });
-                // eslint-disable-next-line no-unused-vars
-                session.on('request', (acceptReq, rejectReq, name, data) => {
-                  acceptReq();
-                });
-                // eslint-disable-next-line no-unused-vars
-                session.on('tcpip', (acceptT, rejectT, tData) => {
-                  acceptT();
-                });
-              });
+      client
+        .on('authentication', ctx => {
+          ctx.accept();
+        })
+        .on('ready', () => {
+          client.on('session', acceptSession => {
+            const session = acceptSession();
+            // something other than exec?
+            session.once('exec', acceptExec => {
+              acceptExec();
             });
+            // eslint-disable-next-line no-unused-vars
+            session.on('request', (acceptReq, rejectReq, name, data) => {
+              acceptReq();
+            });
+            // eslint-disable-next-line no-unused-vars
+            session.on('tcpip', (acceptT, rejectT, tData) => {
+              acceptT();
+            });
+          });
+        });
     });
     server.listen(0, '127.0.0.1', function onListen() {
       resolve(this.address().port);
