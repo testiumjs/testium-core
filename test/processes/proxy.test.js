@@ -61,20 +61,4 @@ describe('Proxy', () => {
     proxy.rawProcess.kill();
     application.rawProcess.kill();
   });
-
-  it('can use an already tunneled port', async () => {
-    const config = new Config({
-      root: HELLO_WORLD,
-      app: { port: '3041' },
-      driver: 'wd',
-      proxy: { port: '0', tunnel: { host: 'tun-host', port: '4242' } },
-    });
-    const { proxy, application } = await spawnServer(config, [Proxy, App]);
-    assert.equal('http://tun-host:4242', proxy.launchArguments[3]);
-    proxy.rawProcess.kill();
-    application.rawProcess.kill();
-  });
-
-  // TODO: something with ./ssh-server
-  it('can open an ssh tunnel to the proxy');
 });
