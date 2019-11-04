@@ -43,7 +43,7 @@
     "qs": "^4.0.0",
     "rc": "^1.1.1",
     "read-package-json": "^2.0.0",
-    "selenium-download": "^2.0.0",
+    "selenium-download": "^2.0.15",
     "subprocess": "~0.3.0",
     "testium-cookie": "^1.0.0"
   },
