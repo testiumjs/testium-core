@@ -1,8 +1,12 @@
 'use strict';
 
+const { promisify } = require('util');
+
 const assert = require('assertive');
 
 const sub = require('../lib/subprocess');
+
+const delay = promisify(setTimeout);
 
 let currentProcesses = null;
 
@@ -133,7 +137,7 @@ describe('subprocess', () => {
       // wait a little bit for the process
       // to actually write out to the log file;
       // yes, arbitrary delays are bad
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await delay(100);
 
       const log = await processes.app.readLog();
       assert.include('100', log);
