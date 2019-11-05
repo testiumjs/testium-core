@@ -50,44 +50,48 @@ describe('Launch all processes Chrome', () => {
   ];
 
   let config;
+  let display;
+  let procs;
   beforeEach(() => {
     config = new Config({
       root: HELLO_WORLD,
       launch: true,
       browser: 'chrome',
     });
+    display = process.env.DISPLAY;
+    delete process.env.DISPLAY;
+    procs = undefined;
   });
 
   afterEach(() => {
     config = null;
+    process.env.DISPLAY = display;
+    if (procs) killProcs(procs);
   });
 
   it('launches all the processes', async () => {
-    const procs = await launchAllProcesses(config);
+    procs = await launchAllProcesses(config);
     const procNames = Object.keys(procs).sort();
     assert.deepEqual(
       'Spawns app, chrome, and proxy',
       ['application', 'chromedriver', 'proxy'],
       procNames
     );
-    killProcs(procs);
   });
 
   it('has the correct chromeOptions when NOT IN docker container', async () => {
-    const procs = await launchAllProcesses(config);
+    procs = await launchAllProcesses(config);
     const { args } = config.desiredCapabilities.chromeOptions;
     assert.deepEqual(chromeOptions, args);
-    killProcs(procs);
   });
 
   it('runs has --no-sandbox when run as root', async () => {
     const getuidStub = sinon.stub(process, 'getuid').returns(0);
 
-    const procs = await launchAllProcesses(config);
+    procs = await launchAllProcesses(config);
     const { args } = config.desiredCapabilities.chromeOptions;
     assert.deepEqual([...chromeOptions, '--no-sandbox'], args);
     getuidStub.restore();
-    killProcs(procs);
   });
 
   // for some reason this is crashing & hanging local & travis
@@ -99,10 +103,9 @@ describe('Launch all processes Chrome', () => {
     ufs.use(fs).use(vol); // build fileystem
     const unpatch = patchFs(ufs); // patch native fs calls
 
-    const procs = await launchAllProcesses(config);
+    procs = await launchAllProcesses(config);
     const { args } = config.desiredCapabilities.chromeOptions;
     assert.deepEqual([...chromeOptions, '--disable-dev-shm-usage'], args);
-    killProcs(procs);
 
     unpatch();
   });
@@ -114,10 +117,9 @@ describe('Launch all processes Chrome', () => {
         desiredCapabilities: { chromeOptions: { args: ['--foobar'] } },
       });
 
-      const procs = await launchAllProcesses(newConfig);
+      procs = await launchAllProcesses(newConfig);
       const { args } = newConfig.desiredCapabilities.chromeOptions;
       assert.deepEqual(['--foobar'], args);
-      killProcs(procs);
     });
 
     context('when mergeArgs: false', () => {
@@ -129,10 +131,9 @@ describe('Launch all processes Chrome', () => {
           },
         });
 
-        const procs = await launchAllProcesses(newConfig);
+        procs = await launchAllProcesses(newConfig);
         const { args } = newConfig.desiredCapabilities.chromeOptions;
         assert.deepEqual(['--foobar'], args);
-        killProcs(procs);
       });
     });
 
@@ -148,10 +149,9 @@ describe('Launch all processes Chrome', () => {
           },
         });
 
-        const procs = await launchAllProcesses(newConfig);
+        procs = await launchAllProcesses(newConfig);
         const { args } = newConfig.desiredCapabilities.chromeOptions;
         assert.deepEqual([...chromeOptions, '--foo'], args);
-        killProcs(procs);
       });
 
       it('handles args that have options with key=value', async () => {
@@ -165,7 +165,7 @@ describe('Launch all processes Chrome', () => {
           },
         });
 
-        const procs = await launchAllProcesses(newConfig);
+        procs = await launchAllProcesses(newConfig);
         const { args } = newConfig.desiredCapabilities.chromeOptions;
         assert.deepEqual(
           [
@@ -176,7 +176,6 @@ describe('Launch all processes Chrome', () => {
           ],
           args
         );
-        killProcs(procs);
       });
 
       it('handles updating base chromeOptions with key=value', async () => {
@@ -190,7 +189,7 @@ describe('Launch all processes Chrome', () => {
           },
         });
 
-        const procs = await launchAllProcesses(newConfig);
+        procs = await launchAllProcesses(newConfig);
         const { args } = newConfig.desiredCapabilities.chromeOptions;
         assert.deepEqual(
           [
@@ -201,7 +200,6 @@ describe('Launch all processes Chrome', () => {
           ],
           args
         );
-        killProcs(procs);
       });
     });
   });
