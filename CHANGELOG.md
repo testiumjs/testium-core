@@ -1,3 +1,36 @@
+### 3.0.0
+
+#### Breaking Changes
+
+drop ES5-compatible syntax, requires Node v8.3.0+
+
+*See: [`fda604d`](https://github.com/testiumjs/testium-core/commit/fda604de6bba44d5bbdf31e2bb047d80e176a542)*
+
+proxy.tunnel.host no longer supported
+
+*See: [`dff3578`](https://github.com/testiumjs/testium-core/commit/dff35787947da9d905d41262bf10e1816901ca93)*
+
+#### Commits
+
+* update deps, refactor, update JS, drop features - **[@dbushong](https://github.com/dbushong)** [#47](https://github.com/testiumjs/testium-core/pull/47)
+  - [`e7dc4c3`](https://github.com/testiumjs/testium-core/commit/e7dc4c3c687c49a31cfd6d8f04079dfe011aa599) **chore:** update deps
+  - [`031b4ef`](https://github.com/testiumjs/testium-core/commit/031b4efa13821d65a5fa357b44fc132dbc564e9d) **chore:** npm audit fix
+  - [`ba1153c`](https://github.com/testiumjs/testium-core/commit/ba1153c5d8b17ba2236d13d859aaa4ec304f5658) **chore:** npm audit fix --force
+  - [`fda604d`](https://github.com/testiumjs/testium-core/commit/fda604de6bba44d5bbdf31e2bb047d80e176a542) **refactor:** pass lint
+  - [`2cbfe66`](https://github.com/testiumjs/testium-core/commit/2cbfe66ad5cabc675720407890ade69592f59b8b) **refactor:** URL fixes and dump sync tests
+  - [`2a67316`](https://github.com/testiumjs/testium-core/commit/2a67316b930284fe84b9516e3afb98090a9d911d) **fix:** revert URL upgrades for now
+  - [`16702d7`](https://github.com/testiumjs/testium-core/commit/16702d70007c57e2c70b5e7bd3444a04179272ed) **test:** fix tests for phantom
+  - [`dff3578`](https://github.com/testiumjs/testium-core/commit/dff35787947da9d905d41262bf10e1816901ca93) **refactor:** remove proxy.tunnel.host support
+  - [`b7c936e`](https://github.com/testiumjs/testium-core/commit/b7c936e0c9ef273a9da4b4166291bf741dddc3e8) **test:** re-enable chrome tests
+  - [`4220c00`](https://github.com/testiumjs/testium-core/commit/4220c00dc1a2104ffa8067b3992368e0bb507db1) **chore:** update selenium-download version
+  - [`70c5eee`](https://github.com/testiumjs/testium-core/commit/70c5eee5bd2ea1a102747385b928770d807b0c29) **test:** disable troublesome union mount test
+  - [`12d7e9d`](https://github.com/testiumjs/testium-core/commit/12d7e9d20e51786d3396e80d0b29e2f374271fca) **refactor:** add vendored, promisified subprocess
+  - [`b14a9d8`](https://github.com/testiumjs/testium-core/commit/b14a9d8536f2f5607abf13fc825a28e70cc6644c) **test:** fix local test running
+  - [`3fc283a`](https://github.com/testiumjs/testium-core/commit/3fc283aca0633788e3bffd9575e7b533a0987f0d) **chore:** (re-)add copyright headers
+  - [`0b000e5`](https://github.com/testiumjs/testium-core/commit/0b000e5d68a9995b71848d21dce8d5dcb74aec39) **chore:** upgrade chromedriver devDep
+  - [`7e031e0`](https://github.com/testiumjs/testium-core/commit/7e031e0cbc45a911db90966dcc8f7aabe198ca85) **refactor:** use modern promisified setTimeout
+
+
 ### 2.0.0
 
 #### Breaking Changes
