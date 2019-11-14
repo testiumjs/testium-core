@@ -1,9 +1,0 @@
-{
-  "extends": "groupon",
-  "env": {
-    "mocha": true
-  },
-  "rules": {
-    "func-names": 0
-  }
-}

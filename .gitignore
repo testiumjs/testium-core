@@ -1,4 +1,3 @@
-/yarn.lock
 node_modules/
 /tmp
 npm-debug.log
@@ -6,3 +5,5 @@ test/tmp
 examples/**/log
 test/log
 bin
+/.nyc_output
+/target

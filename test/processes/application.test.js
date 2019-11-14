@@ -1,10 +1,12 @@
-import path from 'path';
+'use strict';
 
-import assert from 'assertive';
+const path = require('path');
 
-import Config from '../../lib/config';
-import App from '../../lib/processes/application';
-import spawnServer from '../../lib/spawn-server';
+const assert = require('assertive');
+
+const Config = require('../../lib/config');
+const App = require('../../lib/processes/application');
+const spawnServer = require('../../lib/spawn-server');
 
 const HELLO_WORLD = path.resolve(__dirname, '../../examples/hello-world');
 
@@ -14,8 +16,11 @@ describe('App', () => {
     const options = await App.getOptions(config);
     assert.hasType('Finds an open port', Number, options.port);
     assert.equal('Parses command from scripts.start', 'node', options.command);
-    assert.deepEqual('Parses commandArgs from scripts.start',
-      ['server.js', 'Quinn'], options.commandArgs);
+    assert.deepEqual(
+      'Parses commandArgs from scripts.start',
+      ['server.js', 'Quinn'],
+      options.commandArgs
+    );
   });
 
   it('can actually spawn', async () => {

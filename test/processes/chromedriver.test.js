@@ -1,12 +1,14 @@
-import path from 'path';
-import fs from 'fs';
+'use strict';
 
-import assert from 'assertive';
-import mkdirp from 'mkdirp-then';
+const path = require('path');
+const fs = require('fs');
 
-import Config from '../../lib/config';
-import ChromeDriver from '../../lib/processes/chromedriver';
-import spawnServer from '../../lib/spawn-server';
+const assert = require('assertive');
+const mkdirp = require('mkdirp-then');
+
+const Config = require('../../lib/config');
+const ChromeDriver = require('../../lib/processes/chromedriver');
+const spawnServer = require('../../lib/spawn-server');
 
 const browser = 'chrome';
 const root = path.resolve(__dirname, '../tmp/chromedriver');
@@ -18,7 +20,8 @@ async function startChromeDriver(cfg) {
   const { chromedriver } = await spawnServer(config, ChromeDriver);
   chromedriver.rawProcess.kill();
 
-  assert.match('Sets the selenium server url',
+  assert.match(
+    'Sets the selenium server url',
     /^http:\/\/127.0.0.1:\d+$/,
     config.get('selenium.serverUrl')
   );
@@ -35,8 +38,10 @@ describe('ChromeDriver', () => {
   });
 
   afterEach(() => {
-    process.env.PATH =
-      process.env.PATH.replace(/[^:]+\/lib\/chromedriver:/, '');
+    process.env.PATH = process.env.PATH.replace(
+      /[^:]+\/lib\/chromedriver:/,
+      ''
+    );
   });
 
   describe('without chromedriver module', () => {
@@ -61,9 +66,6 @@ describe('ChromeDriver', () => {
 
     it('uses the chrome.chromedriver setting', () =>
       startChromeDriver({ chrome: { chromedriver: tmpCDPath } }));
-
-    it('uses the chrome.chromedriver setting', () =>
-      startChromeDriver({ selenium: { chromedriver: tmpCDPath } }));
 
     it('finds chromedriver in $PATH', async () => {
       process.env.PATH += `:${path.dirname(tmpCDPath)}`;
