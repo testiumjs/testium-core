@@ -43,7 +43,6 @@
     "mkdirp": "^0.5.1",
     "mkdirp-then": "^1.1.0",
     "portscanner": "^2.2.0",
-    "qs": "^6.9.1",
     "rc": "^1.1.1",
     "read-package-json": "^2.1.1",
     "selenium-download": "^2.0.15",
