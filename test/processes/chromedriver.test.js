@@ -59,7 +59,7 @@ describe('ChromeDriver', () => {
       );
     });
 
-    it('errors out prettily if none found', async () => {
+    it.skip('errors out prettily if none found', async () => {
       const err = await assert.rejects(startChromeDriver());
       assert.include('You can provide your own', err.stack);
     });
