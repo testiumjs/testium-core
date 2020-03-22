@@ -21,7 +21,8 @@
     "posttest": "npm-run-all posttest:*",
     "pretest:lint": "npm-run-all lint:*",
     "posttest:nlm": "nlm verify",
-    "test:unit": "mocha"
+    "test:unit": "mocha --exclude test/processes/chromedriver.test.js",
+    "test:chromedriver": "mocha test/processes/chromedriver.test.js"
   },
   "engines": {
     "node": ">=8.3.0"

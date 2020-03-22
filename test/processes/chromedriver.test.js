@@ -27,6 +27,9 @@ async function startChromeDriver(cfg) {
   );
 }
 
+/**
+ * These tests are run outside of the normal test:unit suite due to node 12 require
+ */
 describe('ChromeDriver', () => {
   before(() => {
     try {
@@ -59,7 +62,7 @@ describe('ChromeDriver', () => {
       );
     });
 
-    it.skip('errors out prettily if none found', async () => {
+    it('errors out prettily if none found', async () => {
       const err = await assert.rejects(startChromeDriver());
       assert.include('You can provide your own', err.stack);
     });
@@ -71,11 +74,5 @@ describe('ChromeDriver', () => {
       process.env.PATH += `:${path.dirname(tmpCDPath)}`;
       await startChromeDriver();
     });
-  });
-
-  // this must be last, and in a describe, otherwise it pollutes the require
-  // cache in a way I can't figure out how to clear properly
-  describe('with chromedriver module', () => {
-    it('finds chromedriver from module', () => startChromeDriver());
   });
 });
