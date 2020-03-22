@@ -1,3 +1,12 @@
+### 3.0.1
+
+* chore: update packages - **[@aaarichter](https://github.com/aaarichter)** [#48](https://github.com/testiumjs/testium-core/pull/48)
+  - [`c80d875`](https://github.com/testiumjs/testium-core/commit/c80d87561f3ab78f682b6fff834a3b4355ff081a) **chore:** update packages
+  - [`6b65ed6`](https://github.com/testiumjs/testium-core/commit/6b65ed64ae9f11feef765f8ae92b27a9daa654b1) **test:** disable non-standard chromedriver tests
+  - [`5e694ff`](https://github.com/testiumjs/testium-core/commit/5e694ff606e3e987feb29ccfedc22215e5e0383a) **test:** seperate chromedriver tests
+  - [`f97687a`](https://github.com/testiumjs/testium-core/commit/f97687a902d8c1f41ed4ff7acf1ce76c6c717584) **test:** increase timeout
+
+
 ### 3.0.0
 
 #### Breaking Changes

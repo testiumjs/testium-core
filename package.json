@@ -1,6 +1,6 @@
 {
   "name": "testium-core",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Juggling the bits and pieces to run integration tests",
   "license": "BSD-3-Clause",
   "main": "lib/testium-core.js",
