@@ -1,3 +1,9 @@
+### 3.0.2
+
+* chore(deps): bump lodash from 4.17.15 to 4.17.19 - **[@dependabot[bot]](https://github.com/apps/dependabot)** [#49](https://github.com/testiumjs/testium-core/pull/49)
+  - [`4e07f44`](https://github.com/testiumjs/testium-core/commit/4e07f441998f46399813205a4a8223507b22c1b2) **chore:** bump lodash from 4.17.15 to 4.17.19 - see: [4](- [Commits](https://github.com/lodash/lodash/compare/4)
+
+
 ### 3.0.1
 
 * chore: update packages - **[@aaarichter](https://github.com/aaarichter)** [#48](https://github.com/testiumjs/testium-core/pull/48)
