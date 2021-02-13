@@ -1,3 +1,11 @@
+### 3.0.3
+
+* chore(deps): bump ini from 1.3.5 to 1.3.7 - **[@dependabot[bot]](https://github.com/apps/dependabot)** [#51](https://github.com/testiumjs/testium-core/pull/51)
+  - [`0527392`](https://github.com/testiumjs/testium-core/commit/0527392e35a9654c8a5f923aa002afb132446436) **chore:** bump ini from 1.3.5 to 1.3.7 - see: [v1](- [Commits](https://github.com/isaacs/ini/compare/v1)
+* chore(deps): bump bl from 4.0.2 to 4.0.3 - **[@dependabot[bot]](https://github.com/apps/dependabot)** [#50](https://github.com/testiumjs/testium-core/pull/50)
+  - [`0ca53f1`](https://github.com/testiumjs/testium-core/commit/0ca53f176cc64f16a133d385fad0db8fc87aed60) **chore:** bump bl from 4.0.2 to 4.0.3 - see: [v4](- [Commits](https://github.com/rvagg/bl/compare/v4)
+
+
 ### 3.0.2
 
 * chore(deps): bump lodash from 4.17.15 to 4.17.19 - **[@dependabot[bot]](https://github.com/apps/dependabot)** [#49](https://github.com/testiumjs/testium-core/pull/49)
