@@ -1,3 +1,10 @@
+### v3.0.5 (2021-03-26)
+
+#### 🏡 Internal
+
+* [#53](https://github.com/testiumjs/testium-core/pull/53) chore: change to main; update dependencies & drop Node 8 support ([@aaarichter](https://github.com/aaarichter)) 
+
+
 ### 3.0.4
 
 * chore(deps): bump dot-prop from 4.2.0 to 4.2.1 - **[@dependabot[bot]](https://github.com/apps/dependabot)** [#52](https://github.com/testiumjs/testium-core/pull/52)
