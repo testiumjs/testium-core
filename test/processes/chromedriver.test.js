@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const assert = require('assertive');
-const mkdirp = require('mkdirp-then');
+const mkdirp = require('mkdirp');
 
 const Config = require('../../lib/config');
 const ChromeDriver = require('../../lib/processes/chromedriver');
