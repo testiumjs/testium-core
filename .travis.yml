@@ -1,15 +1,15 @@
 language: node_js
 node_js:
-  - 8
   - 10
   - 12
+  - 14
 deploy:
   - provider: script
     script: npx nlm release
     skip_cleanup: true
     'on':
       branch: main
-      node: 12
+      node: 14
 env:
   - CXX=g++-4.8
 addons:

@@ -95,7 +95,7 @@ describe('testium-core', () => {
         });
         // need to use old syntax for as long as we're testing on phantom
         // eslint-disable-next-line prefer-arrow-callback
-        const hash = await browser.evaluate(function() {
+        const hash = await browser.evaluate(function () {
           // eslint-disable-next-line no-undef
           return window.location.href;
         });
