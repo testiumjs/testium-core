@@ -8,7 +8,7 @@ deploy:
     script: npx nlm release
     skip_cleanup: true
     'on':
-      branch: master
+      branch: main
       node: 12
 env:
   - CXX=g++-4.8

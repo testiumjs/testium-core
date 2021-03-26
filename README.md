@@ -1,4 +1,4 @@
-# Testium: Core [![Build Status](https://travis-ci.org/testiumjs/testium-core.svg?branch=master)](https://travis-ci.org/testiumjs/testium-core)
+# Testium: Core [![Build Status](https://travis-ci.org/testiumjs/testium-core.svg?branch=main)](https://travis-ci.org/testiumjs/testium-core)
 
 Juggling the bits and pieces to run integration tests.
 
