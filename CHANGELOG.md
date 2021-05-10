@@ -1,3 +1,12 @@
+### v3.0.6 (2021-05-10)
+
+#### 🔼 Dependencies
+
+* [#56](https://github.com/testiumjs/testium-core/pull/56) chore(deps): bump hosted-git-info from 2.7.1 to 2.8.9 ([@dependabot[bot]](https://github.com/apps/dependabot)) 
+* [#54](https://github.com/testiumjs/testium-core/pull/54) chore(deps): bump y18n from 3.2.1 to 3.2.2 ([@dependabot[bot]](https://github.com/apps/dependabot)) 
+* [#55](https://github.com/testiumjs/testium-core/pull/55) chore(deps): bump underscore from 1.9.2 to 1.13.1 ([@dependabot[bot]](https://github.com/apps/dependabot)) 
+
+
 ### v3.0.5 (2021-03-26)
 
 #### 🏡 Internal
