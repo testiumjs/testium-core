@@ -1,5 +1,8 @@
 {
-  "extends": "groupon",
+  "extends": [
+    "groupon",
+    "plugin:regexp/recommended"
+  ],
   "overrides": [
     {
       "files": "*.test.js",

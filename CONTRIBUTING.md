@@ -4,7 +4,7 @@
 
 🎉🏅 Thanks for helping us improve this project! 🙏
 
-This document outlines some of the practices we care about.
+This document outlines some practices we care about.
 If you have any questions or suggestions about the process,
 feel free to [open an issue](#reporting-issues)
  or [reach out to us directly](#contact).
@@ -44,13 +44,13 @@ it might be better to follow the
 
 **Note:** If you're planning on making substantial changes,
 please [open an issue first to discuss your idea](#reporting-issues).
-Otherwise you might end up investing a lot of work
+Otherwise, you might end up investing a lot of work
 only to discover that it conflicts with plans the maintainers might have.
 
 The general steps for creating a pull request are:
 
-1. Create a branch for your change.  Always start your branch from the latest
-    `main`.  We recommend using `git wf start some-feature-name` by using
+1. Create a branch for your change.  Always start your branch from the latest default branch.  
+   We recommend using `git wf start some-feature-name` by using
     [git workflow][gitwf].  Run `npm install` to install the dependencies.
 1. If you're fixing a bug, be sure to write a test *first*.  That way you can
     validate that the test actually catches the bug and doesn't pass.
@@ -82,70 +82,59 @@ of thumb:
 
 Please follow the [angular commit message conventions][angular-commits].  We
 use an automated tool for generating releases that depends on the conventions
-to determine the next version and the content of the changelog.  Commit messages
+to determine the next version and the content of the changelog. Commit messages
 that don't follow the conventions will cause `npm test` (and thus CI) to fail.
 
 The short summary - a commit message should look like this:
 
 ```
-<type>: <subject>
-
+<type>(<scope>): <subject>
+<BLANK LINE>
 <body>
-
+<BLANK LINE>
 <references>
-
+<BLANK LINE>
 <footer>
 ```
 
-Everything but the first line is optional.  The empty lines between the
-different parts are required.
+Everything but the first line is optional.
+The empty lines between the different parts are required.
 
 * `<type>`: One of the following:
-  - **feat:** Introduces a new feature. This will cause the minor version to go
-      up.  If this commit adds a feature to this module's public API, it's a
-      `feat:`
-  - **fix:** A bug fix. Causes a patch version bump.  A new feature is not (by
-      itself) a fix.
-  - **docs:** Changes to the documentation. This will also cause an increase of
-      the patch version so that the changes show up in the npm registry.
-  - **style:** Syntax cleanup & lint rule fixes.  Note that often it's better to
-      just amend the previous commit if it introduced lint errors, and tools
-      like `prettier` should be taking care of most `style` issues.
-  - **refactor:** Changes to the code structure without fixing bugs or adding
-      features.  If the functionality is unchanged, but you're touching active
-      code in the package, it's a `refactor`.
-  - **perf:** Performance optimizations.
-  - **test:** Fixing existing tests or adding missing ones.
-      Just like with **style**, if you add tests to a feature you just
-      introduced in the previous commit, consider keeping the tests and the
-      feature in the same commit instead.
-  - **chore:** Changes to the project setup and tools, dependency bumps,
-      and package-building house-keeping.  `chore` is not a judgement on how you
-      feel about a given work.  Changes to actual code are **NEVER** `chore`
-      commits.  If you're fixing, refactoring, or adding a feature, that is
-      by definition a `fix`, `refactor`, or `feat`.  If you're upgrading some
-      dev dependency, fiddling with the package.json author field, etc., that's
-      a `chore` commit.
-* `<subject>`: A [good git commit message subject][limit50].
-  - Keep it brief. If possible the whole first line should have at most 50
-      characters.
-  - Use imperative mood. "Create" instead of "creates" or "created".
-  - No period (".") at the end.
-* `<body>`: Motivation for the change and any context required for understanding
-    the choices made.  Just like the subject, it should use imperative mood.
-* `<references>`: Any URLs relevant to the PR go here.  Use one line per URL and
-    prefix it with the kind of relationship, e.g. "Closes: " or "See: ".  If you
-    are referencing an issue in your commit body or PR description, never use
-    `#123` but the full URL to the issue or PR you are referencing.  That way
-    the reference is easy to resolve from the git history without having to
-    "guess" the correct link even if the commit got cherry-picked or merged
-    into a different project.
-* `<footer>`: This part only applies if your commit introduces a breaking
-    change.  It's important this is present, otherwise the major version will
-    not increase.  See below for an example.
 
-[angular-commits]: https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commit-message-format
-[limit50]: http://chris.beams.io/posts/git-commit/#limit-50
+|`<type>`| Explanation | Version change |
+| :----- | :---------- | :-------------: |
+| **feat** | 🚀 Introduces a new feature | minor |
+||
+| **fix** | 🐛 A bug fix  | patch |
+| **perf** | ⚡ Performance optimizations| patch |
+| **refactor** | 📦️ Changes to the code structure without fixing bugs or adding features | patch |
+| **chore** | 🏡 Changes to the project setup and tools, dependency bumps, house-keeping | patch |
+| **build** | 🏡 Changes that affect the build system (e.g webpack, rollup, ...) | patch |
+| **revert** | ↩️ reverts a previous commit | patch |
+||
+| **docs** | 📝 Changes to the documentation | none |
+| **style** | 💅 Cleanup & lint rule fixes. Note that often it's better to just amend the previous commit if it introduced lint errors | none |
+| **test** | 🧪 Fixing existing tests or adding missing ones. Just like with **style**, if you add tests to a feature you just introduced in the previous commit, consider keeping the tests, and the feature in the same commit instead. | none |
+| **ci** | 🏡 Changes to your CI configuration & scripts | none |
+* `<subject>`: A [good git commit message subject](http://chris.beams.io/posts/git-commit/#limit-50).
+  - Keep it brief. If possible the whole first line should have at most 50 characters.
+  - Use an imperative mood. "Create" instead of "creates" or "created".
+  - No period (".") at the end.
+* `<body>`: Motivation for the change and any context required for understanding the choices made.
+  Just like the subject, it should use an imperative mood.
+* `<scope>`: The scope is optional and specifies the place of your commit. Use `*` for multiple places.
+* `<references>`: Any URLs relevant to the PR go here.
+  Use one line per URL and prefix it with the kind of relationship, e.g. "Closes: " or "See: ".
+  If you are referencing an issue in your commit body or PR description,
+  never use `#123` but the full URL to the issue or PR you are referencing.
+  That way the reference is easy to resolve from the git history without having to "guess" the correct link
+  even if the commit got cherry-picked or merged into a different project.
+* `<footer>`: This part only applies if your commit introduces a breaking change.
+  It's important this is present, otherwise the **major version** will not increase.
+  See below for an example.
+  
+[angular-commits]: https://github.com/angular/angular.js/blob/9bff2ce8fb170d7a33d3ad551922d7e23e9f82fc/DEVELOPERS.md#commit-message-format
 
 ##### Examples
 
