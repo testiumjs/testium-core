@@ -2,6 +2,7 @@
 
 const path = require('path');
 const cp = require('child_process');
+const { promisify } = require('util');
 
 const assert = require('assertive');
 
@@ -10,9 +11,7 @@ const App = require('../../lib/processes/application');
 const Proxy = require('../../lib/processes/proxy');
 const spawnServer = require('../../lib/spawn-server');
 
-const Bluebird = require('bluebird');
-
-Bluebird.promisifyAll(cp);
+const execFileAsync = promisify(cp.execFile);
 
 const HELLO_WORLD = path.resolve(__dirname, '../../examples/hello-world');
 
@@ -38,9 +37,11 @@ describe('Proxy', () => {
       selenium: { serverUrl: 'http://example.com' },
       proxy: { port: '0' },
     });
-    const [options, hostname] = await Bluebird.all([
+    const [options, hostname] = await Promise.all([
       Proxy.getOptions(config),
-      cp.execFileAsync('hostname', ['-f'], { encoding: 'utf8' }).call('trim'),
+      execFileAsync('hostname', ['-f'], { encoding: 'utf8' }).then(s =>
+        s.trim()
+      ),
     ]);
     assert.hasType('Finds an open port', Number, options.port);
     assert.expect('Port is no longer 0', options.port > 0);
