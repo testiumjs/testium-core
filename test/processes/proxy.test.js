@@ -39,8 +39,8 @@ describe('Proxy', () => {
     });
     const [options, hostname] = await Promise.all([
       Proxy.getOptions(config),
-      execFileAsync('hostname', ['-f'], { encoding: 'utf8' }).then(s =>
-        s.trim()
+      execFileAsync('hostname', ['-f'], { encoding: 'utf8' }).then(res =>
+        res.stdout.trim()
       ),
     ]);
     assert.hasType('Finds an open port', Number, options.port);
