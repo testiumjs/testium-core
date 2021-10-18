@@ -48,7 +48,10 @@ describe('ChromeDriver', () => {
   });
 
   describe('without chromedriver module', () => {
+    let oldPath;
     before(() => {
+      oldPath = process.env.PATH;
+      process.env.PATH = '';
       fs.renameSync(
         `${__dirname}/../../node_modules/chromedriver`,
         `${root}/chromedriver`
@@ -56,6 +59,7 @@ describe('ChromeDriver', () => {
     });
 
     after(() => {
+      process.env.PATH = oldPath;
       fs.renameSync(
         `${root}/chromedriver`,
         `${__dirname}/../../node_modules/chromedriver`
