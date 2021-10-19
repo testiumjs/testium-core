@@ -1,3 +1,11 @@
+### v3.0.7 (2021-10-19)
+<a id="v3.0.7"></a>
+#### 🏡 Internal
+
+* [#60](https://github.com/testiumjs/testium-core/pull/60) misc. cleanup ([@dbushong](https://github.com/dbushong))
+* [`f876dc5`](https://github.com/testiumjs/testium-core/commit/f876dc51417779e1df7690cd491c03869f2ccab4) chore: fix release workflow
+
+
 ### v3.0.6 (2021-05-10)
 
 #### 🔼 Dependencies
