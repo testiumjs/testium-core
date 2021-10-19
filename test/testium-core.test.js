@@ -1,5 +1,8 @@
 'use strict';
 
+const { promisify } = require('util');
+const execFile = promisify(require('child_process').execFile);
+
 const assert = require('assertive');
 const Gofer = require('gofer');
 
@@ -20,10 +23,21 @@ async function fetch(uri, opts) {
 describe('testium-core', () => {
   let testium;
   before(async () => {
+    try {
+      await execFile('chromedriver', ['--help']);
+      process.env.testium_browser = 'chrome';
+      process.env.testium_chrome__headless = 'true';
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+      // else we'll use phantomjs
+    }
     testium = await getTestium();
   });
 
-  after(() => testium && testium.close());
+  after(() => {
+    testium && testium.close();
+    delete process.env.testium_browser;
+  });
 
   describe('getNewPageUrl', () => {
     it('ignores absolute urls', () => {

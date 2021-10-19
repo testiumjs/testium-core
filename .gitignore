@@ -7,3 +7,5 @@ test/log
 bin
 /.nyc_output
 /target
+grpn-create.log
+/coverage

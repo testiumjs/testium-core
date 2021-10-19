@@ -2,6 +2,8 @@
 
 const path = require('path');
 const fs = require('fs');
+const { promisify } = require('util');
+const execFile = promisify(require('child_process').execFile);
 
 const assert = require('assertive');
 const { each } = require('lodash');
@@ -26,7 +28,16 @@ describe('Launch all processes PhantomJS', () => {
     browser: 'phantomjs',
   });
 
-  it('launches all the processes', async () => {
+  it('launches all the processes', async function () {
+    // gracefully skip test if phantom isn't installed
+    try {
+      await execFile('phantomjs', ['--help']);
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+      this.skip();
+      return;
+    }
+
     const procs = await launchAllProcesses(config);
     const procNames = Object.keys(procs).sort();
     assert.deepEqual(
