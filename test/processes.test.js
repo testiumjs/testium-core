@@ -6,11 +6,11 @@ const { promisify } = require('util');
 const execFile = promisify(require('child_process').execFile);
 
 const assert = require('assertive');
-const { each } = require('lodash');
 const { patchFs } = require('fs-monkey');
 const { ufs } = require('unionfs');
 const { Volume } = require('memfs');
 const sinon = require('sinon');
+const debug = require('debug')('testium-core:test:processes');
 
 const Config = require('../lib/config');
 const launchAllProcesses = require('../lib/processes');
@@ -18,7 +18,10 @@ const launchAllProcesses = require('../lib/processes');
 const HELLO_WORLD = path.resolve(__dirname, '../examples/hello-world');
 
 function killProcs(procs) {
-  each(procs, ({ rawProcess }) => rawProcess.kill());
+  for (const [name, { rawProcess }] of Object.entries(procs)) {
+    debug(`killing ${name} process`);
+    rawProcess.kill();
+  }
 }
 
 describe('Launch all processes PhantomJS', () => {
@@ -74,18 +77,21 @@ describe('Launch all processes Chrome', () => {
     procs = undefined;
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     config = null;
     process.env.DISPLAY = display;
     if (procs) killProcs(procs);
   });
 
   it('launches all the processes', async () => {
+    config.set('processes', {
+      nc: { command: 'nc', commandArgs: ['-l', '%port%'] },
+    });
     procs = await launchAllProcesses(config);
     const procNames = Object.keys(procs).sort();
     assert.deepEqual(
       'Spawns app, chrome, and proxy',
-      ['application', 'chromedriver', 'proxy'],
+      ['application', 'chromedriver', 'nc', 'proxy'],
       procNames
     );
   });
