@@ -1,3 +1,10 @@
+### v3.1.0 (2021-10-20)
+<a id="v3.1.0"></a>
+#### 🏡 Internal
+
+* [#61](https://github.com/testiumjs/testium-core/pull/61) support "processes" to handle extra procs ([@dbushong](https://github.com/dbushong))
+
+
 ### v3.0.7 (2021-10-19)
 <a id="v3.0.7"></a>
 #### 🏡 Internal
