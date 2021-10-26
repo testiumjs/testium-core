@@ -57,7 +57,6 @@ describe('Launch all processes Chrome', () => {
     '--disable-application-cache',
     '--media-cache-size=1',
     '--disk-cache-size=1',
-    '--disk-cache-dir=/dev/null',
     '--disable-cache',
     '--disable-desktop-notifications',
     '--headless',
@@ -212,8 +211,8 @@ describe('Launch all processes Chrome', () => {
           [
             ...chromeOptions.slice(0, 2),
             '--disk-cache-size=2',
+            ...chromeOptions.slice(3),
             '--disk-cache-dir=./tmp',
-            ...chromeOptions.slice(4),
           ],
           args
         );
