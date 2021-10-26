@@ -1,3 +1,10 @@
+### v3.1.1 (2021-10-26)
+<a id="v3.1.1"></a>
+#### 🏡 Internal
+
+* [#62](https://github.com/testiumjs/testium-core/pull/62) stop specifying disk cache as /dev/null ([@dbushong](https://github.com/dbushong))
+
+
 ### v3.1.0 (2021-10-20)
 <a id="v3.1.0"></a>
 #### 🏡 Internal
