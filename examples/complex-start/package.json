@@ -1,0 +1,6 @@
+{
+  "name": "testium-core.complex-start",
+  "scripts": {
+    "start": "FOO=bar=baz NODE_ENV=test npx foo --flag=value"
+  }
+}
