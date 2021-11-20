@@ -1,3 +1,10 @@
+### v3.2.0 (2021-11-20)
+<a id="v3.2.0"></a>
+#### 🏡 Internal
+
+* [#63](https://github.com/testiumjs/testium-core/pull/63) parse package.json "start" env vars correctly ([@dbushong](https://github.com/dbushong))
+
+
 ### v3.1.1 (2021-10-26)
 <a id="v3.1.1"></a>
 #### 🏡 Internal
